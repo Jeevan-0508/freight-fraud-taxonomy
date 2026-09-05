@@ -1,0 +1,257 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Freight & Carrier Fraud Pattern",
+  "description": "Schema for a single fraud pattern entry in the Freight & Carrier Fraud Risk Taxonomy.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "category",
+    "severity",
+    "prevalence",
+    "modes",
+    "summary",
+    "how_it_works",
+    "indicators",
+    "false_positives",
+    "countermeasures",
+    "references",
+    "version",
+    "last_reviewed"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^FFT-[0-9]{3}$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3
+    },
+    "aliases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "category": {
+      "enum": [
+        "identity",
+        "contractual",
+        "cargo_loss",
+        "documentary",
+        "digital",
+        "insider",
+        "financial",
+        "regulatory"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "critical"
+      ],
+      "description": "Typical loss impact per realised event."
+    },
+    "prevalence": {
+      "enum": [
+        "rare",
+        "occasional",
+        "common",
+        "endemic"
+      ],
+      "description": "How often the pattern is observed in EU road freight."
+    },
+    "modes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "road",
+          "rail",
+          "sea",
+          "air",
+          "intermodal",
+          "parcel"
+        ]
+      }
+    },
+    "geography": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Regions where the pattern is most reported."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 40
+    },
+    "how_it_works": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "string"
+      },
+      "description": "Ordered mechanics of the pattern."
+    },
+    "indicators": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "phase",
+          "signal",
+          "observable_in",
+          "weight"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "phase": {
+            "enum": [
+              "pre_award",
+              "in_transit",
+              "post_event"
+            ]
+          },
+          "signal": {
+            "type": "string"
+          },
+          "observable_in": {
+            "type": "string",
+            "description": "Where the signal can actually be seen: a data field, document, system or physical check."
+          },
+          "weight": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "1 = weak/contextual, 5 = near-conclusive on its own."
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "false_positives": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "looks_like",
+          "actually",
+          "how_to_rule_out"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "looks_like": {
+            "type": "string"
+          },
+          "actually": {
+            "type": "string"
+          },
+          "how_to_rule_out": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "countermeasures": {
+      "type": "object",
+      "required": [
+        "preventive",
+        "detective",
+        "responsive"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "preventive": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "detective": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "responsive": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "regulatory_hooks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "instrument",
+          "provision",
+          "relevance"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "instrument": {
+            "type": "string"
+          },
+          "provision": {
+            "type": "string"
+          },
+          "relevance": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "related": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^FFT-[0-9]{3}$"
+      }
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "publisher",
+          "url"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "last_reviewed": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    }
+  }
+}

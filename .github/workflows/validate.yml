@@ -1,0 +1,26 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate patterns against the schema
+        run: python3 scripts/validate.py
+
+      - name: Check index.json and docs/data.json are up to date
+        run: |
+          python3 scripts/build_index.py
+          if ! git diff --quiet -- taxonomy/index.json docs/data.json; then
+            echo "::error::Generated files are stale. Run scripts/build_index.py and commit the result."
+            git --no-pager diff --stat -- taxonomy/index.json docs/data.json
+            exit 1
+          fi

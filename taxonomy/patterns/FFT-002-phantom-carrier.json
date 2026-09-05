@@ -1,0 +1,155 @@
+{
+  "id": "FFT-002",
+  "name": "Phantom Carrier",
+  "aliases": [
+    "fictitious carrier",
+    "ghost carrier",
+    "non-existent haulier"
+  ],
+  "category": "identity",
+  "severity": "critical",
+  "prevalence": "common",
+  "modes": [
+    "road",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "North America"
+  ],
+  "summary": "An entity is created for the specific purpose of collecting freight and disappearing. It has no operational history, no real fleet and no intention of delivering. The documentation is fabricated or copied well enough to pass a paperwork-only onboarding check.",
+  "how_it_works": [
+    "A newly registered company, or a company with no transport history, presents itself as an established haulier.",
+    "Operating authority, insurance certificates and VAT identifiers are fabricated, or copied from a real operator with details altered.",
+    "The entity bids aggressively on high-value, easily resold commodities and accepts almost any rate.",
+    "It collects one or several loads in a short window, sometimes on the same day across different shippers.",
+    "The entity then ceases all contact. Registered addresses turn out to be virtual offices, mail drops or unrelated residential premises."
+  ],
+  "indicators": [
+    {
+      "phase": "pre_award",
+      "signal": "Company registered within the last six to twelve months with no verifiable transport operating history",
+      "observable_in": "Commercial register and operator licence register",
+      "weight": 3,
+      "notes": "New companies are legitimate and common. Weight comes from combination, not from newness alone."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Registered address is a virtual office, mailbox service, or an address shared with unrelated companies",
+      "observable_in": "Commercial register address, compared against known virtual-office providers",
+      "weight": 4
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Insurance certificate is supplied as an image or edited document rather than confirmed by the insurer or broker directly",
+      "observable_in": "Onboarding document set",
+      "weight": 4,
+      "notes": "See FFT-011 for the detail of certificate fraud."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Bids concentrate almost exclusively on high value-density, easily resold commodities such as consumer electronics, pharmaceuticals, tobacco, or branded apparel",
+      "observable_in": "Bid history by commodity class",
+      "weight": 3
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Contact identity has no verifiable footprint: no traceable landline, no consistent business presence, personal email domain",
+      "observable_in": "Contact verification during onboarding",
+      "weight": 2
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Vehicle presenting at pickup carries no operator livery and plates are not registered to the contracting entity",
+      "observable_in": "Gate check and plate verification",
+      "weight": 5
+    },
+    {
+      "phase": "in_transit",
+      "signal": "All contact stops immediately after loading and the vehicle stops reporting position",
+      "observable_in": "Visibility platform and dispatch contact log",
+      "weight": 5
+    },
+    {
+      "phase": "post_event",
+      "signal": "Registered address, on inspection, has no transport operation at it",
+      "observable_in": "Site verification or local enquiry",
+      "weight": 5
+    },
+    {
+      "phase": "post_event",
+      "signal": "The same principals or the same address reappear behind a newly registered entity",
+      "observable_in": "Register of directors and shareholders across entities",
+      "weight": 4,
+      "notes": "This is what makes the pattern repeatable, and why case records must be kept against people and addresses, not just trading names."
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "A newly registered company with no transport history bidding on freight.",
+      "actually": "A genuine new entrant, or a newly incorporated vehicle of an existing operator restructuring its business.",
+      "how_to_rule_out": "Verify operating authority directly with the issuing authority, confirm insurance with the insurer, and confirm that declared equipment exists and is registered to the entity. A real new entrant passes all three; a phantom fails at least one."
+    },
+    {
+      "looks_like": "A shared or serviced office address.",
+      "actually": "Small legitimate hauliers and freight agents commonly use serviced offices while operating from a separate yard.",
+      "how_to_rule_out": "Ask for the operational depot or parking location separately from the registered address, and verify that it exists and is capable of holding the declared fleet."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Verify operating authority, insurance and tax identifiers at source with the issuing body, and never accept a counterparty-supplied document as the primary evidence.",
+      "Require the operational depot address separately from the registered address, and verify it independently.",
+      "Apply a graduated exposure limit to new counterparties: cap cargo value and prohibit high-risk commodity classes until a delivery history exists.",
+      "Screen the registered address and the named principals against prior incident records before award, not only the company name."
+    ],
+    "detective": [
+      "Automatically flag a first-time counterparty bidding on a load above a defined value threshold for manual release.",
+      "Reconcile plate and driver identity at the gate against the dispatch record, and hold the load if they do not match.",
+      "Alert when position reporting and contact both cease within the first hours after loading, rather than waiting for the delivery window to close."
+    ],
+    "responsive": [
+      "Treat a non-contactable carrier holding loaded cargo as a theft in progress and escalate to law enforcement immediately rather than as a service failure.",
+      "Preserve the full onboarding document set, correspondence and gate photographs as evidence before any account is closed.",
+      "Record the incident against principals, addresses, bank accounts and telephone numbers so a re-registered successor can be matched.",
+      "Share the identifiers through the relevant industry or law enforcement channel, since these entities move between shippers rapidly."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§6 Präventionsmaßnahmen",
+      "relevance": "Preventive measures listed here are the kind of control a company is expected to define and evidence once the risk is identified."
+    }
+  ],
+  "related": [
+    "FFT-001",
+    "FFT-003",
+    "FFT-004",
+    "FFT-011"
+  ],
+  "references": [
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    },
+    {
+      "title": "Organised property crime and cargo theft in the EU",
+      "publisher": "Europol",
+      "url": "https://www.europol.europa.eu/"
+    },
+    {
+      "title": "Fraud prevention resources for transportation intermediaries",
+      "publisher": "Transportation Intermediaries Association",
+      "url": "https://www.tianet.org/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

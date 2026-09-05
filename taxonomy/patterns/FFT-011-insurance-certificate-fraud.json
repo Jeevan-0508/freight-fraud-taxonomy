@@ -1,0 +1,141 @@
+{
+  "id": "FFT-011",
+  "name": "Insurance Certificate Fraud",
+  "aliases": [
+    "fake certificate of insurance",
+    "lapsed cover",
+    "COI fraud"
+  ],
+  "category": "financial",
+  "severity": "high",
+  "prevalence": "common",
+  "modes": [
+    "road",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "North America"
+  ],
+  "summary": "A carrier presents evidence of liability or cargo cover that is forged, expired, cancelled, or materially narrower than it appears. Nothing is detected until a claim is made, at which point the shipper discovers it has been carrying uninsured exposure across every movement that carrier performed.",
+  "how_it_works": [
+    "A certificate is supplied as a document or image during onboarding rather than confirmed by the insurer.",
+    "The document is forged, altered as to limits or dates, or genuine but subsequently cancelled for non-payment.",
+    "Alternatively the cover is genuine but excludes the commodity, the territory, the equipment type or the theft peril actually relevant.",
+    "Because certificates are typically checked once at onboarding, the lapse is never observed.",
+    "The gap becomes visible only when a claim is declined."
+  ],
+  "indicators": [
+    {
+      "phase": "pre_award",
+      "signal": "Certificate supplied as an image or editable document rather than confirmed directly by the insurer or broker",
+      "observable_in": "Onboarding document set and verification record",
+      "weight": 4,
+      "notes": "The core structural weakness. Verification at source removes most of this pattern at negligible cost."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Insurer, broker or policy reference cannot be verified, or the insurer is not authorised in the relevant market",
+      "observable_in": "Regulator's register of authorised insurers",
+      "weight": 5
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Cover limits are exactly at, or suspiciously aligned with, the shipper's stated minimum",
+      "observable_in": "Certificate limits against the contractual minimum",
+      "weight": 2
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Policy period ends before the contract term, or renewal evidence is never provided",
+      "observable_in": "Certificate validity dates against contract dates",
+      "weight": 4
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Cover excludes the commodity class, territory, equipment type or theft peril actually being carried",
+      "observable_in": "Policy wording rather than the certificate summary",
+      "weight": 5,
+      "notes": "The exclusion is frequently the real exposure. A certificate can be perfectly genuine and still provide no cover for the movement at hand."
+    },
+    {
+      "phase": "post_event",
+      "signal": "Insurer declines on the basis of cancellation, non-disclosure or non-payment predating the loss",
+      "observable_in": "Claim correspondence",
+      "weight": 5
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "Cover limits exactly matching the required minimum.",
+      "actually": "Entirely normal commercial behaviour, since operators buy to the requirement rather than above it.",
+      "how_to_rule_out": "Do not treat this as an indicator alone. It has value only alongside a failure to verify at source."
+    },
+    {
+      "looks_like": "An unfamiliar insurer.",
+      "actually": "A legitimate specialist or regional transport insurer or mutual, of which there are many in European road freight.",
+      "how_to_rule_out": "Check the regulator's register of authorised insurers rather than relying on brand recognition."
+    },
+    {
+      "looks_like": "A certificate that has expired in the file.",
+      "actually": "An administrative lag in collecting renewal evidence where cover was in fact continuous.",
+      "how_to_rule_out": "Confirm continuity with the insurer for the relevant period. Continuous cover is confirmable; a lapse is not."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Verify cover directly with the insurer or broker at onboarding and never accept a counterparty-supplied document as primary evidence.",
+      "Read the policy wording for exclusions relevant to the commodity, territory, equipment and perils actually being moved, rather than relying on the certificate summary.",
+      "Require notice of cancellation or material change to be given to the shipper as a contractual term.",
+      "Check that the insurer is authorised in the relevant market."
+    ],
+    "detective": [
+      "Track certificate expiry dates automatically and suspend tendering when evidence of renewal is not on file, rather than treating expiry as an administrative backlog.",
+      "Re-verify cover with the insurer periodically for carriers above a defined exposure level, not only at onboarding.",
+      "Reconcile the commodity and territory actually tendered against the scope of cover on file, and alert on movements outside it."
+    ],
+    "responsive": [
+      "Quantify the full uninsured exposure across every movement the carrier performed in the affected period, not only the movement that produced the claim.",
+      "Preserve the certificate as supplied, since it is the evidence of misrepresentation.",
+      "Report a forged certificate to the named insurer, which has its own interest in the forgery and may already have other cases.",
+      "Review whether other carriers were onboarded through the same unverified route and re-verify that whole cohort."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§6 Präventionsmaßnahmen",
+      "relevance": "Preventive measures listed here are the kind of control a company is expected to define and evidence once the risk is identified."
+    }
+  ],
+  "related": [
+    "FFT-001",
+    "FFT-002",
+    "FFT-003",
+    "FFT-012"
+  ],
+  "references": [
+    {
+      "title": "Fraud prevention resources for transportation intermediaries",
+      "publisher": "Transportation Intermediaries Association",
+      "url": "https://www.tianet.org/"
+    },
+    {
+      "title": "Road transport safety and security guidance",
+      "publisher": "IRU",
+      "url": "https://www.iru.org/"
+    },
+    {
+      "title": "Convention on the Contract for the International Carriage of Goods by Road (CMR) and the e-CMR Additional Protocol",
+      "publisher": "United Nations Treaty Collection (depositary record)",
+      "url": "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XI-B-11&chapter=11"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

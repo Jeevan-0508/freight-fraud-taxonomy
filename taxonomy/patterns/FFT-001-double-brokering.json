@@ -1,0 +1,154 @@
+{
+  "id": "FFT-001",
+  "name": "Double Brokering",
+  "aliases": [
+    "unauthorised re-brokering",
+    "double brokerage",
+    "illegal re-tendering"
+  ],
+  "category": "contractual",
+  "severity": "high",
+  "prevalence": "common",
+  "modes": [
+    "road",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "North America"
+  ],
+  "summary": "A carrier that has been awarded a load does not move it, but silently re-tenders it to an unvetted third party while continuing to present itself as the performing carrier. The shipper loses visibility of who is physically holding the cargo, and the liability chain no longer matches the contractual chain.",
+  "how_it_works": [
+    "An entity wins a load on a spot market or through a broker, presenting valid-looking operating authority and insurance.",
+    "Instead of dispatching its own equipment, it posts the same load to another marketplace at a lower rate.",
+    "A second carrier collects the freight, often unaware that the load has been re-brokered.",
+    "The original entity invoices the shipper and either pays the second carrier late, pays it partially, or disappears without paying it at all.",
+    "If the cargo is stolen or damaged, the insurance certificate on file belongs to an entity that never touched the goods, and the actual holder may be uninsured."
+  ],
+  "indicators": [
+    {
+      "phase": "pre_award",
+      "signal": "Carrier accepts a rate materially below the prevailing corridor market rate without a plausible backhaul explanation",
+      "observable_in": "Tender or bid record compared with lane rate benchmark",
+      "weight": 3,
+      "notes": "On its own this is only commercial behaviour. It gains weight in combination with a thin asset profile."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Registered fleet size or reported power units cannot plausibly cover the volume the entity is bidding on",
+      "observable_in": "National operator licence register versus tender volume",
+      "weight": 4
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Contact telephone or email domain differs from the domain registered to the licensed operator",
+      "observable_in": "Onboarding contact record versus operator licence record",
+      "weight": 3
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Tractor unit, trailer plate or driver name at pickup does not match the dispatch confirmation",
+      "observable_in": "Gate check, driver ID check, photograph at loading",
+      "weight": 5,
+      "notes": "This is the single strongest and cheapest detection point. It requires only that someone compares two fields at the gate."
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Telematics or ELD feed is unavailable, and position updates arrive only as manual driver check calls",
+      "observable_in": "Visibility platform",
+      "weight": 3
+    },
+    {
+      "phase": "post_event",
+      "signal": "An unknown third carrier contacts the shipper directly chasing payment for the same load",
+      "observable_in": "Accounts payable enquiries",
+      "weight": 5,
+      "notes": "Near-conclusive. An unpaid subcontractor surfacing is often the first time the shipper learns the load was re-brokered."
+    },
+    {
+      "phase": "post_event",
+      "signal": "Claim is submitted by, or on behalf of, an entity that does not appear anywhere in the contractual chain",
+      "observable_in": "Claims file",
+      "weight": 4
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "A different tractor and driver arrive than were confirmed at dispatch.",
+      "actually": "Legitimate last-minute dispatch reallocation inside the same operator, which is routine in day-to-day fleet management.",
+      "how_to_rule_out": "Check whether the substituted unit is registered to the same operator licence, and whether the change was notified through the normal dispatch channel before arrival rather than explained at the gate."
+    },
+    {
+      "looks_like": "A subcontracted carrier appears on the transport document.",
+      "actually": "Contractually permitted subcontracting that was disclosed and approved in the transport agreement.",
+      "how_to_rule_out": "Confirm the subcontractor appears on the approved-subcontractor list and that liability and insurance were extended in writing. Disclosed subcontracting is not double brokering; the defining feature of this pattern is concealment."
+    },
+    {
+      "looks_like": "A very low accepted rate.",
+      "actually": "A genuine repositioning move where the carrier needs to relocate equipment and would otherwise run empty.",
+      "how_to_rule_out": "Look at whether the entity's other recent movements form a coherent geographic pattern consistent with repositioning."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Require written disclosure and prior approval of any subcontracting, and make undisclosed re-tendering an express termination event in the transport contract.",
+      "Verify operating authority and insurance against the issuing register directly, not against a document supplied by the counterparty.",
+      "Cross-check that the entity's declared fleet capacity is consistent with the volume it is being awarded.",
+      "Confirm bank details out of band before the first payment, and treat any later change of bank details as a new verification event."
+    ],
+    "detective": [
+      "Make it mandatory to record tractor plate, trailer plate and driver identity at loading, and reconcile all three against the dispatch confirmation automatically rather than by eye.",
+      "Alert on the same load reference appearing on more than one freight marketplace.",
+      "Monitor accounts payable for payment enquiries from entities that are not in the contractual chain, and treat every one as a potential re-brokering disclosure.",
+      "Track the share of movements per carrier with no telematics coverage."
+    ],
+    "responsive": [
+      "Suspend further tendering to the entity immediately and freeze open invoices pending reconciliation.",
+      "Establish who physically held the cargo and whether that party carried valid liability cover, before settling any claim.",
+      "Notify the affected subcontractor directly, since it is a victim of the same scheme and is usually the best source of evidence.",
+      "Record the case against the entity and its identified principals, not only against the trading name, so a re-registered successor entity can be recognised."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§6 Präventionsmaßnahmen",
+      "relevance": "Preventive measures listed here are the kind of control a company is expected to define and evidence once the risk is identified."
+    },
+    {
+      "instrument": "CMR Convention",
+      "provision": "Art. 3 and Art. 17",
+      "relevance": "The contracting carrier remains liable for the acts of the parties it employs to perform the carriage, which is precisely what a concealed re-tender obscures."
+    }
+  ],
+  "related": [
+    "FFT-002",
+    "FFT-003",
+    "FFT-011",
+    "FFT-012"
+  ],
+  "references": [
+    {
+      "title": "Fraud prevention resources for transportation intermediaries",
+      "publisher": "Transportation Intermediaries Association",
+      "url": "https://www.tianet.org/"
+    },
+    {
+      "title": "Convention on the Contract for the International Carriage of Goods by Road (CMR) and the e-CMR Additional Protocol",
+      "publisher": "United Nations Treaty Collection (depositary record)",
+      "url": "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XI-B-11&chapter=11"
+    },
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

@@ -1,0 +1,132 @@
+{
+  "id": "FFT-005",
+  "name": "Systematic Pilferage",
+  "aliases": [
+    "partial load theft",
+    "skimming",
+    "shortage fraud"
+  ],
+  "category": "cargo_loss",
+  "severity": "medium",
+  "prevalence": "endemic",
+  "modes": [
+    "road",
+    "parcel",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "North America"
+  ],
+  "summary": "Rather than taking a whole load, small quantities are removed repeatedly across many movements. Each individual shortage is small enough to be absorbed as a discrepancy, written off, or blamed on miscount at origin. The pattern is only visible in aggregate, which is why it can persist for long periods and why it is frequently the most expensive fraud class in cumulative terms.",
+  "how_it_works": [
+    "Cargo is accessed during a movement, at a stop, or at a transfer point, and a small proportion is removed.",
+    "The shortage is small relative to the consignment, so it falls within tolerance or is disputed as an origin count error.",
+    "Because each event is individually trivial, no investigation is triggered and no case record is created.",
+    "The behaviour repeats across the same route, the same driver, the same transfer point or the same consignee.",
+    "Cumulative loss becomes material long before any single event does."
+  ],
+  "indicators": [
+    {
+      "phase": "post_event",
+      "signal": "Shortage rate for a specific route, driver, transfer point or consignee is persistently above the network baseline",
+      "observable_in": "Discrepancy data aggregated by dimension rather than by event",
+      "weight": 4,
+      "notes": "This pattern is invisible at event level by design. Detection is entirely a matter of aggregation."
+    },
+    {
+      "phase": "post_event",
+      "signal": "Shortages cluster on high value-density, easily resold items within otherwise mixed consignments",
+      "observable_in": "Discrepancy records by SKU class",
+      "weight": 4
+    },
+    {
+      "phase": "post_event",
+      "signal": "Shortage quantities sit consistently just below the threshold that would trigger a formal investigation",
+      "observable_in": "Discrepancy value distribution against the escalation threshold",
+      "weight": 5,
+      "notes": "A distribution that bunches immediately under a control threshold indicates knowledge of the threshold, which narrows the population considerably."
+    },
+    {
+      "phase": "post_event",
+      "signal": "Discrepancies persist on a lane after the consignee and origin count processes have both been independently verified",
+      "observable_in": "Reconciliation after controlled count",
+      "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Unexplained stops, or dwell time materially above the corridor norm, correlate with the affected movements",
+      "observable_in": "Telematics stop analysis",
+      "weight": 3
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Seal number recorded at destination differs from the number recorded at origin, or the seal is reported as replaced in transit",
+      "observable_in": "Seal record",
+      "weight": 4,
+      "notes": "See FFT-007."
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "Persistent shortages on a lane.",
+      "actually": "A genuine count, labelling or system error at origin, or a units-of-measure mismatch between systems.",
+      "how_to_rule_out": "Run a controlled count at origin and at destination for a defined period before treating the pattern as theft. Process error survives a controlled count; pilferage usually stops during it."
+    },
+    {
+      "looks_like": "Shortages concentrated on one driver.",
+      "actually": "That driver is simply assigned disproportionately to the affected lane or shift.",
+      "how_to_rule_out": "Normalise by exposure. Compare shortages per movement or per consignment handled, never absolute counts, and test whether the lane or the individual is the better explanation."
+    },
+    {
+      "looks_like": "Losses concentrated on high-value items.",
+      "actually": "High-value items are more likely to be counted carefully and therefore more likely to have discrepancies detected at all.",
+      "how_to_rule_out": "Compare detection rates as well as loss rates, and check whether low-value shortages are simply not being recorded."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Use tamper-evident, uniquely numbered seals and record the number at every custody transfer rather than only at origin and destination.",
+      "Segregate high value-density items and apply a distinct handling and verification regime rather than the general one.",
+      "Rotate assignment of drivers and handlers on affected lanes, which both disrupts an established scheme and provides a natural control comparison.",
+      "Avoid publishing internal investigation thresholds, since a known threshold is a target to stay beneath."
+    ],
+    "detective": [
+      "Aggregate discrepancies continuously by route, driver, vehicle, transfer point, consignee and SKU class, and alert on sustained deviation from baseline rather than on individual events.",
+      "Monitor the distribution of shortage values for bunching immediately below control thresholds.",
+      "Reconcile seal numbers at every custody change automatically.",
+      "Correlate discrepancy events against unplanned stops and dwell outliers in telematics data."
+    ],
+    "responsive": [
+      "Establish process error or theft with a controlled count before any accusation, because this pattern has a genuinely high false-positive rate.",
+      "Preserve seal records, telematics history and handover documentation for the whole affected period, not only for the triggering event.",
+      "Quantify cumulative rather than per-event loss when deciding on proportionate response, since the per-event figure systematically understates the harm.",
+      "Review whether the escalation threshold itself created the pattern, and change it if the distribution suggests it was known."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    }
+  ],
+  "related": [
+    "FFT-007",
+    "FFT-009"
+  ],
+  "references": [
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    },
+    {
+      "title": "Organised property crime and cargo theft in the EU",
+      "publisher": "Europol",
+      "url": "https://www.europol.europa.eu/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

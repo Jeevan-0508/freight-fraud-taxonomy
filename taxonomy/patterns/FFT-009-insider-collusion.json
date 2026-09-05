@@ -1,0 +1,147 @@
+{
+  "id": "FFT-009",
+  "name": "Insider Collusion",
+  "aliases": [
+    "internal collusion",
+    "employee facilitation",
+    "inside job"
+  ],
+  "category": "insider",
+  "severity": "critical",
+  "prevalence": "occasional",
+  "modes": [
+    "road",
+    "parcel",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "Global"
+  ],
+  "summary": "A person with legitimate access supplies information or suppresses a control so that an external party can take cargo. The insider rarely handles the goods. What they provide is far more valuable: knowledge of which load is worth taking, when it moves, and which check will not be performed.",
+  "how_it_works": [
+    "An individual with legitimate access identifies high-value consignments and their timing.",
+    "That information, or an access credential, is passed to an external party.",
+    "A control that would normally detect the loss is bypassed, delayed or performed without scrutiny.",
+    "Cargo is taken through what appears operationally to be a normal process.",
+    "The absence of forced entry and the correctness of the paperwork direct the initial investigation away from the origin site."
+  ],
+  "indicators": [
+    {
+      "phase": "post_event",
+      "signal": "Losses concentrate on consignments whose value was known internally but not externally visible from packaging or documentation",
+      "observable_in": "Comparison of loss set against externally observable value cues",
+      "weight": 5,
+      "notes": "The strongest structural indicator. If the targeting could not have been done from outside, it was informed from inside."
+    },
+    {
+      "phase": "post_event",
+      "signal": "Events cluster on a specific shift, gate, workstation or supervisory approval rather than distributing across the operation",
+      "observable_in": "Loss events aggregated by shift, location and approver",
+      "weight": 4
+    },
+    {
+      "phase": "post_event",
+      "signal": "The control that would have caught the loss was, in each case, the one not performed or performed by the same individual",
+      "observable_in": "Control execution log against loss events",
+      "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Access, override or exception authority used outside the pattern normal for that role",
+      "observable_in": "System access and override logs",
+      "weight": 3
+    },
+    {
+      "phase": "post_event",
+      "signal": "Losses stop abruptly during an unannounced audit or a staffing change and resume afterwards",
+      "observable_in": "Loss timeline against audit and roster changes",
+      "weight": 5,
+      "notes": "Close to conclusive when it recurs, and it is the reason unannounced controls are worth more than scheduled ones."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Undisclosed relationship between an employee with award or approval authority and a counterparty",
+      "observable_in": "Conflict-of-interest declaration compared against register data",
+      "weight": 4
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "Losses concentrated on one shift or individual.",
+      "actually": "That shift or person simply handles more volume, or handles the higher-value flow by design.",
+      "how_to_rule_out": "Normalise by exposure. Compare loss per consignment handled, and test whether volume alone explains the concentration before treating the person as the explanation."
+    },
+    {
+      "looks_like": "A control was not performed on the affected movements.",
+      "actually": "Systemic under-resourcing, in which the control is skipped routinely across the operation under time pressure.",
+      "how_to_rule_out": "Measure the control's execution rate overall. If it is skipped at a similar rate on unaffected movements, the finding is a process failure and not evidence of collusion."
+    },
+    {
+      "looks_like": "An employee has a connection to a counterparty.",
+      "actually": "An entirely innocent connection in an industry where local employment and supplier networks overlap heavily.",
+      "how_to_rule_out": "Establish whether the individual actually influenced the award or the control, since a disclosed and non-influential relationship is a governance matter, not a fraud finding."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Separate the person who knows a consignment's value from the person who executes the release, so that neither role alone is sufficient.",
+      "Restrict visibility of consignment value on a need-to-know basis rather than exposing it throughout the operation.",
+      "Require conflict-of-interest declarations from anyone with award, approval or override authority, and reconcile them against register data rather than accepting them at face value.",
+      "Rotate assignments and approvers on high-value flows and use mandatory leave to create natural control gaps."
+    ],
+    "detective": [
+      "Aggregate loss events by shift, gate, workstation and approving individual, normalised by volume handled.",
+      "Monitor override and exception authority for use outside role-normal patterns.",
+      "Run unannounced controls and compare loss rates during and outside them.",
+      "Maintain a confidential reporting channel and treat reports as an evidential lead rather than a personnel complaint."
+    ],
+    "responsive": [
+      "Preserve access logs, CCTV and rosters before initiating any interview, since these are the records most likely to be lost once the investigation becomes known.",
+      "Normalise by exposure before drawing any conclusion about an individual, because this pattern has the highest personal cost of a wrong call in the entire taxonomy.",
+      "Involve HR and legal from the outset so that evidence remains usable and the process remains defensible.",
+      "Close the information asymmetry that made targeting possible, since replacing the individual without changing the access does not close the exposure."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§8 Beschwerdeverfahren",
+      "relevance": "A functioning complaints procedure is both a legal obligation and, in practice, one of the most productive detection channels for this pattern."
+    },
+    {
+      "instrument": "Directive (EU) 2019/1937",
+      "provision": "Protection of persons who report breaches",
+      "relevance": "Insider-facilitated loss is frequently first surfaced by a colleague, so whistleblower protection is directly operative."
+    }
+  ],
+  "related": [
+    "FFT-004",
+    "FFT-005",
+    "FFT-008"
+  ],
+  "references": [
+    {
+      "title": "Occupational fraud research and the fraud triangle",
+      "publisher": "Association of Certified Fraud Examiners",
+      "url": "https://www.acfe.com/"
+    },
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    },
+    {
+      "title": "Organised property crime and cargo theft in the EU",
+      "publisher": "Europol",
+      "url": "https://www.europol.europa.eu/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

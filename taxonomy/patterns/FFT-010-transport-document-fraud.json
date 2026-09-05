@@ -1,0 +1,142 @@
+{
+  "id": "FFT-010",
+  "name": "Transport Document Fraud",
+  "aliases": [
+    "falsified consignment note",
+    "CMR fraud",
+    "proof of delivery forgery"
+  ],
+  "category": "documentary",
+  "severity": "medium",
+  "prevalence": "common",
+  "modes": [
+    "road",
+    "sea",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "Global"
+  ],
+  "summary": "The documents that establish what was carried, in what condition, and to whom it was released are altered, forged or reused. The cargo may never be missing at all: the purpose is often to shift liability, to support a claim, or to obtain payment for a delivery that did not occur as documented.",
+  "how_it_works": [
+    "A consignment note, delivery receipt or condition report is altered after signature, or created retrospectively.",
+    "Alternatively a genuine document from one movement is reused to evidence a different one.",
+    "Signatures are illegible, absent, or belong to a person the consignee cannot identify.",
+    "The document then becomes the primary evidence in a claim or payment dispute.",
+    "Because the paperwork is internally consistent, the dispute is resolved on the false record."
+  ],
+  "indicators": [
+    {
+      "phase": "post_event",
+      "signal": "Proof of delivery signature cannot be attributed to any person authorised by the consignee to receive goods",
+      "observable_in": "Consignee verification of the signatory",
+      "weight": 5
+    },
+    {
+      "phase": "post_event",
+      "signal": "Document metadata, sequence number or timestamp is inconsistent with the movement it purports to evidence",
+      "observable_in": "Document set compared with telematics and system timestamps",
+      "weight": 4
+    },
+    {
+      "phase": "post_event",
+      "signal": "The same document image or reference appears against more than one movement",
+      "observable_in": "Document deduplication across the claims and delivery record",
+      "weight": 5,
+      "notes": "Reuse is one of the easiest patterns to detect automatically and one of the least often checked."
+    },
+    {
+      "phase": "post_event",
+      "signal": "Condition or quantity annotations appear in different ink, hand, font or layer from the rest of the document",
+      "observable_in": "Physical or forensic inspection of the original",
+      "weight": 4
+    },
+    {
+      "phase": "post_event",
+      "signal": "Reservations about apparent condition are absent on taking over the goods but a claim later relies on pre-existing damage",
+      "observable_in": "Consignment note reservations against the claim narrative",
+      "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Only a photographed or retyped copy is ever provided and the original is said to be unavailable",
+      "observable_in": "Document handling record",
+      "weight": 3,
+      "notes": "Common in legitimate operations, so weak on its own; it matters because it removes the ability to test the other indicators."
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "An unattributable delivery signature.",
+      "actually": "Genuine receipt by agency staff, a temporary worker, or a third-party site operator whom the consignee does not have on record.",
+      "how_to_rule_out": "Ask the consignee who was actually on site in that window rather than only whether the name is on the authorised list."
+    },
+    {
+      "looks_like": "Handwritten annotations added to a consignment note.",
+      "actually": "Legitimate reservations recorded at handover, which is exactly what the document is designed for.",
+      "how_to_rule_out": "Establish when the annotation was made and by whom. Contemporaneous reservations are the correct use of the document; retrospective additions are not."
+    },
+    {
+      "looks_like": "The same reference appearing twice.",
+      "actually": "A split delivery, a re-delivery after a failed attempt, or a documented partial movement.",
+      "how_to_rule_out": "Check whether the duplication is explained by a recorded split or re-delivery event before treating it as reuse."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Move to electronic consignment notes with authenticated, timestamped signature capture, which removes most of the alteration surface.",
+      "Maintain a verified list of persons authorised to receive at each consignee site, and require identification at handover.",
+      "Require reservations about apparent condition to be recorded at handover, with photographs, rather than accepted later.",
+      "Retain originals under controlled custody rather than accepting images as the record of truth."
+    ],
+    "detective": [
+      "Deduplicate delivery documents automatically by image hash and reference across movements and claims.",
+      "Reconcile document timestamps against telematics arrival and departure data and flag inconsistencies.",
+      "Sample-verify delivery signatures directly with consignees rather than only when a claim arises.",
+      "Flag claims that rely on a document for which no original can be produced."
+    ],
+    "responsive": [
+      "Secure the original document before any dispute is progressed, since the evidential value of a copy is limited.",
+      "Verify the signatory with the consignee directly rather than through the party relying on the document.",
+      "Reconstruct the movement from independent records such as telematics, gate, toll and access logs, which cannot be retrospectively edited as easily.",
+      "Treat a lane on which originals are routinely unavailable as an unmeasured liability exposure."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "CMR Convention",
+      "provision": "Art. 8, Art. 9 and the e-CMR Additional Protocol",
+      "relevance": "The consignment note is prima facie evidence of the conditions of carriage and of receipt, which is precisely why falsifying it is effective and why the e-CMR protocol matters."
+    }
+  ],
+  "related": [
+    "FFT-007",
+    "FFT-004",
+    "FFT-011"
+  ],
+  "references": [
+    {
+      "title": "Convention on the Contract for the International Carriage of Goods by Road (CMR) and the e-CMR Additional Protocol",
+      "publisher": "United Nations Treaty Collection (depositary record)",
+      "url": "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XI-B-11&chapter=11"
+    },
+    {
+      "title": "Road transport safety and security guidance",
+      "publisher": "IRU",
+      "url": "https://www.iru.org/"
+    },
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

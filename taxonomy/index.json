@@ -1,0 +1,127 @@
+{
+  "taxonomy": "Freight & Carrier Fraud Risk Taxonomy",
+  "version": "1.0.0",
+  "pattern_count": 12,
+  "categories": [
+    "cargo_loss",
+    "contractual",
+    "digital",
+    "documentary",
+    "financial",
+    "identity",
+    "insider",
+    "regulatory"
+  ],
+  "indicator_count": 77,
+  "countermeasure_count": 137,
+  "patterns": [
+    {
+      "id": "FFT-001",
+      "name": "Double Brokering",
+      "category": "contractual",
+      "severity": "high",
+      "prevalence": "common",
+      "summary": "A carrier that has been awarded a load does not move it, but silently re-tenders it to an unvetted third party while continuing to present itself as the performing carrier. The shipper loses visibility of who is physically holding the cargo, and the liability chain no longer matches the contractual chain.",
+      "file": "patterns/FFT-001-double-brokering.json"
+    },
+    {
+      "id": "FFT-002",
+      "name": "Phantom Carrier",
+      "category": "identity",
+      "severity": "critical",
+      "prevalence": "common",
+      "summary": "An entity is created for the specific purpose of collecting freight and disappearing. It has no operational history, no real fleet and no intention of delivering. The documentation is fabricated or copied well enough to pass a paperwork-only onboarding check.",
+      "file": "patterns/FFT-002-phantom-carrier.json"
+    },
+    {
+      "id": "FFT-003",
+      "name": "Carrier Identity Takeover",
+      "category": "identity",
+      "severity": "critical",
+      "prevalence": "occasional",
+      "summary": "Rather than inventing a company, the perpetrator adopts the identity of a real, licensed operator, typically one that is dormant, recently sold, or simply obscure. Every credential presented checks out because it belongs to a genuine business. Only the contact details, and the party actually collecting the freight, are substituted.",
+      "file": "patterns/FFT-003-carrier-identity-takeover.json"
+    },
+    {
+      "id": "FFT-004",
+      "name": "Fictitious Pickup",
+      "category": "cargo_loss",
+      "severity": "critical",
+      "prevalence": "occasional",
+      "summary": "Cargo is handed over voluntarily at the loading point to someone who is not entitled to it. No lock is forced and no vehicle is broken into, which is what makes this pattern both effective and difficult to classify: operationally it looks like a normal collection, and the loss is often first recorded as a delivery failure rather than a theft.",
+      "file": "patterns/FFT-004-fictitious-pickup.json"
+    },
+    {
+      "id": "FFT-005",
+      "name": "Systematic Pilferage",
+      "category": "cargo_loss",
+      "severity": "medium",
+      "prevalence": "endemic",
+      "summary": "Rather than taking a whole load, small quantities are removed repeatedly across many movements. Each individual shortage is small enough to be absorbed as a discrepancy, written off, or blamed on miscount at origin. The pattern is only visible in aggregate, which is why it can persist for long periods and why it is frequently the most expensive fraud class in cumulative terms.",
+      "file": "patterns/FFT-005-systematic-pilferage.json"
+    },
+    {
+      "id": "FFT-006",
+      "name": "Unsecured Parking Theft",
+      "category": "cargo_loss",
+      "severity": "high",
+      "prevalence": "endemic",
+      "summary": "Cargo is taken from a stationary vehicle at an unsecured stop, most often during a statutory rest period at night. This is the highest-volume cargo crime pattern in European road freight and it is overwhelmingly a function of where and when a vehicle stops rather than of who is carrying it.",
+      "file": "patterns/FFT-006-unsecured-parking-theft.json"
+    },
+    {
+      "id": "FFT-007",
+      "name": "Seal Tampering and Reseal Fraud",
+      "category": "documentary",
+      "severity": "medium",
+      "prevalence": "common",
+      "summary": "A load is accessed and then closed again with a substituted or reapplied seal so that the consignment appears intact on arrival. The purpose is not to hide the cargo loss forever but to move the point of apparent loss away from the party responsible, usually by making it look like a shortage at origin.",
+      "file": "patterns/FFT-007-seal-tampering-and-reseal-fraud.json"
+    },
+    {
+      "id": "FFT-008",
+      "name": "GPS Spoofing and Telematics Manipulation",
+      "category": "digital",
+      "severity": "high",
+      "prevalence": "occasional",
+      "summary": "The position or movement data a shipper relies on is deliberately falsified or suppressed, so that a vehicle appears to be somewhere it is not, or appears to be moving normally while it is stopped. The purpose is to remove the time window and location that any investigation would otherwise start from.",
+      "file": "patterns/FFT-008-gps-spoofing-and-telematics-manipulation.json"
+    },
+    {
+      "id": "FFT-009",
+      "name": "Insider Collusion",
+      "category": "insider",
+      "severity": "critical",
+      "prevalence": "occasional",
+      "summary": "A person with legitimate access supplies information or suppresses a control so that an external party can take cargo. The insider rarely handles the goods. What they provide is far more valuable: knowledge of which load is worth taking, when it moves, and which check will not be performed.",
+      "file": "patterns/FFT-009-insider-collusion.json"
+    },
+    {
+      "id": "FFT-010",
+      "name": "Transport Document Fraud",
+      "category": "documentary",
+      "severity": "medium",
+      "prevalence": "common",
+      "summary": "The documents that establish what was carried, in what condition, and to whom it was released are altered, forged or reused. The cargo may never be missing at all: the purpose is often to shift liability, to support a claim, or to obtain payment for a delivery that did not occur as documented.",
+      "file": "patterns/FFT-010-transport-document-fraud.json"
+    },
+    {
+      "id": "FFT-011",
+      "name": "Insurance Certificate Fraud",
+      "category": "financial",
+      "severity": "high",
+      "prevalence": "common",
+      "summary": "A carrier presents evidence of liability or cargo cover that is forged, expired, cancelled, or materially narrower than it appears. Nothing is detected until a claim is made, at which point the shipper discovers it has been carrying uninsured exposure across every movement that carrier performed.",
+      "file": "patterns/FFT-011-insurance-certificate-fraud.json"
+    },
+    {
+      "id": "FFT-012",
+      "name": "Undisclosed Subcontracting Chain",
+      "category": "regulatory",
+      "severity": "high",
+      "prevalence": "common",
+      "summary": "The contracted carrier is not the performing carrier, and neither is the party it engaged. Each tier is individually lawful, but the chain is undisclosed, so the shipper cannot identify who is physically carrying its goods. This defeats sanctions screening, cabotage and posting compliance, insurance verification and human-rights due diligence simultaneously, because all of them depend on knowing the identity of the actual performing party.",
+      "file": "patterns/FFT-012-undisclosed-subcontracting-chain.json"
+    }
+  ]
+}

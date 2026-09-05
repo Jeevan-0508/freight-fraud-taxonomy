@@ -1,0 +1,141 @@
+{
+  "id": "FFT-006",
+  "name": "Unsecured Parking Theft",
+  "aliases": [
+    "curtain slashing",
+    "roadside cargo theft",
+    "truck stop theft"
+  ],
+  "category": "cargo_loss",
+  "severity": "high",
+  "prevalence": "endemic",
+  "modes": [
+    "road"
+  ],
+  "geography": [
+    "EU"
+  ],
+  "summary": "Cargo is taken from a stationary vehicle at an unsecured stop, most often during a statutory rest period at night. This is the highest-volume cargo crime pattern in European road freight and it is overwhelmingly a function of where and when a vehicle stops rather than of who is carrying it.",
+  "how_it_works": [
+    "A loaded vehicle stops at a lay-by, service area or industrial estate that has no access control, lighting or surveillance.",
+    "The stop is typically driven by driving-time regulation rather than chosen for security, which makes it predictable.",
+    "Curtains are cut or doors are opened while the driver rests, frequently without the driver being aware.",
+    "Cargo is removed in minutes into a following vehicle.",
+    "The loss is often discovered only at delivery, by which time the location and time window are uncertain."
+  ],
+  "indicators": [
+    {
+      "phase": "pre_award",
+      "signal": "Planned route and schedule force a rest period in a corridor segment with no certified secure parking within range",
+      "observable_in": "Route plan compared against secure parking availability",
+      "weight": 4,
+      "notes": "This is the key preventable exposure, and it is visible before the vehicle ever moves."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "High value-density commodity is planned to move in a soft-sided trailer",
+      "observable_in": "Load plan and equipment type",
+      "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Overnight stop recorded at a location that is not a certified secure parking area",
+      "observable_in": "Telematics stop location against secure parking registry",
+      "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Stop duration of several hours in a known high-incidence corridor segment",
+      "observable_in": "Telematics dwell analysis against incident geography",
+      "weight": 3
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Trailer door or curtain sensor triggers during a rest period",
+      "observable_in": "Trailer intrusion sensor, where fitted",
+      "weight": 5
+    },
+    {
+      "phase": "post_event",
+      "signal": "Loss discovered at delivery with no identified stop, indicating that stop-level visibility is absent",
+      "observable_in": "Claim narrative and telematics coverage",
+      "weight": 3,
+      "notes": "Not an indicator of the crime so much as of a control gap that makes this pattern viable and unattributable."
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "A long unplanned stop in a high-risk area.",
+      "actually": "A breakdown, traffic incident, border queue or enforced congestion stop, none of which the driver chose.",
+      "how_to_rule_out": "Correlate with breakdown and incident reports and with traffic data for the corridor before treating a stop as a policy breach."
+    },
+    {
+      "looks_like": "Curtain damage at delivery.",
+      "actually": "Accidental damage from loading equipment or road debris, which is common on soft-sided equipment.",
+      "how_to_rule_out": "Compare the cut geometry and location with the load plan, and verify against seal and count records whether anything is actually missing."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Plan routes so that every statutory rest falls within reach of a certified secure parking area, and treat a route that cannot meet this as an exception requiring approval.",
+      "Move high value-density commodities in hard-sided or rigid equipment rather than soft-sided trailers.",
+      "Prohibit overnight stops in identified high-incidence corridor segments through contractual route and stop policy, not through guidance alone.",
+      "Where a soft-sided trailer is unavoidable, fit anti-slash curtain material and intrusion detection."
+    ],
+    "detective": [
+      "Geofence certified secure parking areas and alert on any rest period taken outside them.",
+      "Alert on stop duration above a corridor-specific threshold in segments with elevated incident history.",
+      "Fit and monitor door and curtain sensors so that the loss is detected at the stop rather than at the delivery."
+    ],
+    "responsive": [
+      "Report immediately with the precise stop location and time window, since recovery and investigation both depend on narrowing these.",
+      "Feed the confirmed location back into route and parking policy, so that corridor risk assessment reflects observed rather than assumed exposure.",
+      "Review whether the schedule itself made a compliant secure stop impossible, and correct the planning rule rather than the driver."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§6 Präventionsmaßnahmen",
+      "relevance": "Preventive measures listed here are the kind of control a company is expected to define and evidence once the risk is identified."
+    },
+    {
+      "instrument": "Regulation (EC) No 561/2006",
+      "provision": "Driving time and rest periods",
+      "relevance": "Mandatory rest periods determine where and when a loaded vehicle must stop, which is what makes this exposure structural and therefore plannable."
+    }
+  ],
+  "related": [
+    "FFT-005",
+    "FFT-007"
+  ],
+  "references": [
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    },
+    {
+      "title": "Secure truck parking area standards and certification",
+      "publisher": "ESPORG",
+      "url": "https://www.esporg.eu/"
+    },
+    {
+      "title": "Organised property crime and cargo theft in the EU",
+      "publisher": "Europol",
+      "url": "https://www.europol.europa.eu/"
+    },
+    {
+      "title": "Road transport safety and security guidance",
+      "publisher": "IRU",
+      "url": "https://www.iru.org/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

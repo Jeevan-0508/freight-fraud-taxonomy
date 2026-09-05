@@ -1,0 +1,136 @@
+{
+  "id": "FFT-007",
+  "name": "Seal Tampering and Reseal Fraud",
+  "aliases": [
+    "seal substitution",
+    "reseal",
+    "seal integrity fraud"
+  ],
+  "category": "documentary",
+  "severity": "medium",
+  "prevalence": "common",
+  "modes": [
+    "road",
+    "sea",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "Global"
+  ],
+  "summary": "A load is accessed and then closed again with a substituted or reapplied seal so that the consignment appears intact on arrival. The purpose is not to hide the cargo loss forever but to move the point of apparent loss away from the party responsible, usually by making it look like a shortage at origin.",
+  "how_it_works": [
+    "The original seal is removed, defeated, or reapplied after access.",
+    "A replacement seal is fitted, often with a number that resembles the original, or the destination record is altered to match the replacement.",
+    "The consignment presents as sealed and intact at delivery.",
+    "The resulting shortage is attributed to a miscount at origin because the seal appeared unbroken.",
+    "Responsibility is therefore displaced to a party that had no opportunity to cause the loss."
+  ],
+  "indicators": [
+    {
+      "phase": "post_event",
+      "signal": "Seal number recorded at destination does not match the number recorded at origin",
+      "observable_in": "Seal record at both ends",
+      "weight": 5,
+      "notes": "Conclusive of substitution, but only detectable if the number is actually recorded at both ends. In practice the control most often fails because the number is never captured, not because it matches."
+    },
+    {
+      "phase": "post_event",
+      "signal": "Seal is intact but the consignment is short",
+      "observable_in": "Delivery count against seal status",
+      "weight": 4
+    },
+    {
+      "phase": "post_event",
+      "signal": "Seal type, colour or issuer differs from the one issued at origin",
+      "observable_in": "Photograph of seal at delivery",
+      "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Seal reported as broken and replaced in transit for an operational reason, such as an inspection, without independent corroboration",
+      "observable_in": "In-transit exception report",
+      "weight": 3,
+      "notes": "Legitimate inspections do break seals. The indicator is the absence of corroborating authority documentation, not the replacement itself."
+    },
+    {
+      "phase": "post_event",
+      "signal": "Physical evidence of defeat on the seal body: heat marks, adhesive residue, misaligned serial, deformation",
+      "observable_in": "Physical inspection of the retained seal",
+      "weight": 4
+    },
+    {
+      "phase": "post_event",
+      "signal": "Seals for a lane are drawn from a range that is not centrally controlled, or the sequence has gaps",
+      "observable_in": "Seal issue and reconciliation log",
+      "weight": 3
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "Seal number at destination differs from origin.",
+      "actually": "A lawful customs, police or roadside inspection broke the original seal and applied a new one, which is routine on international movements.",
+      "how_to_rule_out": "Require the inspecting authority's documentation and check that the replacement seal is one the authority issues. Legitimate inspections produce a paper trail."
+    },
+    {
+      "looks_like": "Seal appears damaged on arrival.",
+      "actually": "Mechanical or thermal damage in normal transit, particularly on long or multimodal moves.",
+      "how_to_rule_out": "Inspect whether the seal body shows defeat characteristics rather than wear, and verify the count independently before treating it as tampering."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Use uniquely numbered, tamper-evident seals drawn from a centrally controlled and reconciled range.",
+      "Require the seal number to be captured photographically at every custody transfer, not only at origin and destination.",
+      "Define and communicate a single lawful procedure for in-transit reseal, requiring authority documentation and immediate notification.",
+      "Never allow the party transporting the cargo to hold uncontrolled stock of blank seals for the lanes it operates."
+    ],
+    "detective": [
+      "Automatically reconcile seal numbers at every recorded custody change and raise an exception on any mismatch.",
+      "Reconcile issued against used seal ranges periodically and investigate gaps.",
+      "Retain seals from any consignment with a discrepancy for physical inspection rather than discarding them at the dock."
+    ],
+    "responsive": [
+      "Retain the physical seal as evidence, since defeat characteristics are the most reliable proof available and are lost once it is discarded.",
+      "Establish the last custody point at which the original number was independently verified, which bounds the responsible segment.",
+      "Verify any claimed authority inspection directly with that authority.",
+      "Treat a lane where seal numbers are not captured at intermediate custody changes as an unmeasured risk rather than a low risk."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "CMR Convention",
+      "provision": "Art. 8 and Art. 9",
+      "relevance": "The carrier's obligation to check apparent condition on taking over the goods, and the evidential value of the consignment note, both turn on what was recorded at each custody transfer."
+    }
+  ],
+  "related": [
+    "FFT-005",
+    "FFT-006",
+    "FFT-010"
+  ],
+  "references": [
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    },
+    {
+      "title": "Convention on the Contract for the International Carriage of Goods by Road (CMR) and the e-CMR Additional Protocol",
+      "publisher": "United Nations Treaty Collection (depositary record)",
+      "url": "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XI-B-11&chapter=11"
+    },
+    {
+      "title": "Road transport safety and security guidance",
+      "publisher": "IRU",
+      "url": "https://www.iru.org/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

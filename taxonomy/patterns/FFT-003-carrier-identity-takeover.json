@@ -1,0 +1,135 @@
+{
+  "id": "FFT-003",
+  "name": "Carrier Identity Takeover",
+  "aliases": [
+    "dormant authority hijack",
+    "operator identity theft",
+    "carrier impersonation"
+  ],
+  "category": "identity",
+  "severity": "critical",
+  "prevalence": "occasional",
+  "modes": [
+    "road",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "North America"
+  ],
+  "summary": "Rather than inventing a company, the perpetrator adopts the identity of a real, licensed operator, typically one that is dormant, recently sold, or simply obscure. Every credential presented checks out because it belongs to a genuine business. Only the contact details, and the party actually collecting the freight, are substituted.",
+  "how_it_works": [
+    "A real operator with valid authority is selected, often one that is inactive, recently dissolved, or has minimal online presence.",
+    "The perpetrator registers lookalike contact channels: a similar domain, a new telephone number, an email address that closely resembles the genuine one.",
+    "Genuine licence numbers, insurance references and registration data are presented, so verification against public registers succeeds.",
+    "Freight is awarded and collected under the borrowed identity.",
+    "The real operator is unaware until it is contacted about a load it never carried, or a claim it never caused."
+  ],
+  "indicators": [
+    {
+      "phase": "pre_award",
+      "signal": "Contact domain is a close variant of the operator's genuine domain, differing by a character, a suffix or a top-level domain",
+      "observable_in": "Onboarding contact record compared with the domain historically associated with the licence holder",
+      "weight": 5,
+      "notes": "The strongest single indicator of this pattern, and cheap to check."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Contact telephone or email details for a known licence number have changed recently and the change was not initiated through an existing relationship",
+      "observable_in": "Change history on the carrier master record",
+      "weight": 4
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Bank details supplied do not match the account name of the licensed operator, or are held in a different country from the operator",
+      "observable_in": "Payment master data",
+      "weight": 5
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Licence is valid but the operator has no recent activity, filings or movements",
+      "observable_in": "Register filing history and any available activity data",
+      "weight": 3
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Equipment presenting at pickup is not registered to the licence holder",
+      "observable_in": "Plate verification at gate",
+      "weight": 5
+    },
+    {
+      "phase": "post_event",
+      "signal": "The genuine operator denies all knowledge of the movement when contacted on independently obtained details",
+      "observable_in": "Direct verification using details from the register, not from the tender",
+      "weight": 5,
+      "notes": "Always re-contact using details obtained independently. Contacting the number supplied by the perpetrator simply reaches the perpetrator."
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "Contact details for an existing carrier have changed.",
+      "actually": "Genuine rebranding, domain migration, office relocation, or acquisition.",
+      "how_to_rule_out": "Confirm the change through the pre-existing channel, not the new one, and require confirmation from a known contact. A genuine change survives verification through the old channel; a takeover does not."
+    },
+    {
+      "looks_like": "Bank account name differs from the operator name.",
+      "actually": "Legitimate use of a factoring company or a group treasury account, which is common in road freight.",
+      "how_to_rule_out": "Require a written assignment or factoring agreement, and verify it with the factor directly. Legitimate factoring is documented and verifiable."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Treat any change to contact details or bank details on an existing carrier record as a high-risk event requiring out-of-band verification through the previously known channel.",
+      "Bind the carrier master record to a verified domain and telephone number, and alert on any deviation at tender.",
+      "Require that the payee name match the licensed operator, or that a verified factoring assignment be on file.",
+      "Verify licence status and licence-holder identity together, rather than checking only that a licence number is valid."
+    ],
+    "detective": [
+      "Run automated lookalike-domain detection against the domains of onboarded carriers.",
+      "Flag tenders where a dormant licence suddenly becomes commercially active.",
+      "Reconcile equipment registration against licence holder at the gate."
+    ],
+    "responsive": [
+      "Notify the impersonated operator, which is a victim and will usually cooperate, and which may already hold evidence.",
+      "Preserve the lookalike domain, email headers, telephone numbers and bank details, since these are the artefacts that link cases together.",
+      "Report to the licensing authority, because impersonation of a licence holder affects the integrity of the register itself.",
+      "Re-verify all counterparties onboarded in the same period through the same channel, since these campaigns rarely target a single shipper."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§6 Präventionsmaßnahmen",
+      "relevance": "Preventive measures listed here are the kind of control a company is expected to define and evidence once the risk is identified."
+    }
+  ],
+  "related": [
+    "FFT-002",
+    "FFT-001",
+    "FFT-011"
+  ],
+  "references": [
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    },
+    {
+      "title": "Organised property crime and cargo theft in the EU",
+      "publisher": "Europol",
+      "url": "https://www.europol.europa.eu/"
+    },
+    {
+      "title": "Fraud prevention resources for transportation intermediaries",
+      "publisher": "Transportation Intermediaries Association",
+      "url": "https://www.tianet.org/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

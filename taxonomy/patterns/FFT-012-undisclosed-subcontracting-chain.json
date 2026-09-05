@@ -1,0 +1,166 @@
+{
+  "id": "FFT-012",
+  "name": "Undisclosed Subcontracting Chain",
+  "aliases": [
+    "hidden tier",
+    "subcontracting depth risk",
+    "chain opacity"
+  ],
+  "category": "regulatory",
+  "severity": "high",
+  "prevalence": "common",
+  "modes": [
+    "road",
+    "intermodal"
+  ],
+  "geography": [
+    "EU"
+  ],
+  "summary": "The contracted carrier is not the performing carrier, and neither is the party it engaged. Each tier is individually lawful, but the chain is undisclosed, so the shipper cannot identify who is physically carrying its goods. This defeats sanctions screening, cabotage and posting compliance, insurance verification and human-rights due diligence simultaneously, because all of them depend on knowing the identity of the actual performing party.",
+  "how_it_works": [
+    "A load is awarded to a contracted carrier, which subcontracts it, possibly more than once.",
+    "Each tier is a real, licensed business, so no individual step looks fraudulent.",
+    "The shipper's records name only the first tier.",
+    "Screening, verification and due diligence are therefore performed against an entity that never touches the cargo.",
+    "A sanctioned party, an unlicensed operator, or a serious labour-standards breach can sit two tiers down and remain entirely invisible to the shipper's controls."
+  ],
+  "indicators": [
+    {
+      "phase": "pre_award",
+      "signal": "Contract permits subcontracting without any obligation to disclose the identity of the performing party",
+      "observable_in": "Transport contract terms",
+      "weight": 4,
+      "notes": "This is a control design defect rather than a behavioural signal, and it is where the exposure originates."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Contracted volume is materially greater than the entity's own declared capacity, implying routine subcontracting",
+      "observable_in": "Awarded volume against declared fleet capacity",
+      "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Vehicle or driver at pickup belongs to an entity that does not appear anywhere in the shipper's records",
+      "observable_in": "Gate record against contractual chain",
+      "weight": 5,
+      "notes": "The gate is the only place the real performing party reliably becomes visible."
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Vehicle registration country and driver nationality pattern are inconsistent with the declared operator's establishment",
+      "observable_in": "Gate record and transport documentation",
+      "weight": 3
+    },
+    {
+      "phase": "post_event",
+      "signal": "Claims, penalties or enforcement notices name an entity absent from the shipper's carrier master data",
+      "observable_in": "Claims and enforcement correspondence",
+      "weight": 5
+    },
+    {
+      "phase": "post_event",
+      "signal": "Sanctions or adverse-media screening produces a hit on a party discovered only after an incident",
+      "observable_in": "Retrospective screening of the actual performing party",
+      "weight": 5,
+      "notes": "By this point the exposure has already been carried, which is the whole problem with screening only tier one."
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "A subcontractor's vehicle performing the movement.",
+      "actually": "Disclosed and approved subcontracting, which is normal, lawful and often unavoidable in European road freight.",
+      "how_to_rule_out": "Check whether the performing party is on the approved list and whether liability and insurance were extended. Disclosed subcontracting is a managed risk; the pattern here is specifically the absence of disclosure."
+    },
+    {
+      "looks_like": "A foreign-registered vehicle on a domestic leg.",
+      "actually": "Lawful cabotage or a lawful combined-transport leg within the permitted limits.",
+      "how_to_rule_out": "Check the operation against the applicable cabotage limits and documentation rather than inferring a breach from the registration plate alone."
+    },
+    {
+      "looks_like": "Deep subcontracting.",
+      "actually": "A legitimate groupage or network model in which multiple operators handle successive legs by design.",
+      "how_to_rule_out": "Establish whether the model is declared and documented. The risk is opacity, not depth."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Require disclosure of the performing party before collection as a contractual condition, and make non-disclosure a breach rather than a service issue.",
+      "Maintain an approved-subcontractor list and prohibit tiers beyond a defined depth for high-value or high-risk movements.",
+      "Flow down sanctions screening, insurance verification and labour-standards obligations contractually to every tier, with audit rights.",
+      "Screen the performing party, not only the contracting party, before release."
+    ],
+    "detective": [
+      "Reconcile the operator identity captured at the gate against the contractual chain automatically, and treat any unknown entity as an exception requiring resolution.",
+      "Re-screen the actual performing parties periodically against sanctions and adverse-media sources rather than screening tier one at onboarding only.",
+      "Monitor the ratio of awarded volume to declared capacity per carrier as a proxy for undisclosed subcontracting.",
+      "Reconcile claims and enforcement correspondence against carrier master data and investigate every unrecognised entity."
+    ],
+    "responsive": [
+      "Reconstruct the full chain for the affected movements and screen every identified tier retrospectively.",
+      "Assess whether the opacity itself constitutes a due-diligence failure, since the obligation attaches to the risk and not to the paperwork.",
+      "Document the finding and the remediation, because under the German regime the documentation of the analysis and the measures is itself the compliance artefact.",
+      "Close the contractual gap that permitted undisclosed subcontracting before resuming tendering."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§6 Präventionsmaßnahmen",
+      "relevance": "Preventive measures listed here are the kind of control a company is expected to define and evidence once the risk is identified."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§9 Mittelbare Zulieferer",
+      "relevance": "Obligations extend to indirect suppliers where substantiated knowledge of a risk exists, which is exactly the situation an undisclosed subcontracting chain creates."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§10 Dokumentations- und Berichtspflicht",
+      "relevance": "The analysis and the measures taken must be documented and reported, so an unidentifiable performing party is a documentation failure as well as a control failure."
+    },
+    {
+      "instrument": "CSDDD (Directive (EU) 2024/1760)",
+      "provision": "Risk-based due diligence across the chain of activities",
+      "relevance": "Extends comparable obligations EU-wide, making chain visibility a durable requirement rather than a German peculiarity."
+    },
+    {
+      "instrument": "Regulation (EU) 2020/1055",
+      "provision": "Cabotage and establishment rules",
+      "relevance": "Compliance cannot be assessed at all if the performing operator's identity and establishment are unknown."
+    }
+  ],
+  "related": [
+    "FFT-001",
+    "FFT-011",
+    "FFT-002"
+  ],
+  "references": [
+    {
+      "title": "Act on Corporate Due Diligence Obligations in Supply Chains (LkSG) — information in English",
+      "publisher": "BAFA (Federal Office for Economic Affairs and Export Control)",
+      "url": "https://www.bafa.de/DE/Lieferketten/Multilinguales_Angebot/multilinguales_angebot_node.html"
+    },
+    {
+      "title": "Consolidated list of persons, groups and entities subject to EU financial sanctions",
+      "publisher": "European Commission",
+      "url": "https://finance.ec.europa.eu/eu-and-world/sanctions-restrictive-measures_en"
+    },
+    {
+      "title": "Mobility Package I: access to the market and cabotage rules",
+      "publisher": "European Commission",
+      "url": "https://transport.ec.europa.eu/transport-modes/road/mobility-package-i_en"
+    },
+    {
+      "title": "Convention on the Contract for the International Carriage of Goods by Road (CMR) and the e-CMR Additional Protocol",
+      "publisher": "United Nations Treaty Collection (depositary record)",
+      "url": "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XI-B-11&chapter=11"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}

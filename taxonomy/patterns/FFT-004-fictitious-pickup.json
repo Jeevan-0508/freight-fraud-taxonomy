@@ -1,0 +1,142 @@
+{
+  "id": "FFT-004",
+  "name": "Fictitious Pickup",
+  "aliases": [
+    "theft by deception at origin",
+    "fraudulent collection",
+    "load theft at loading"
+  ],
+  "category": "cargo_loss",
+  "severity": "critical",
+  "prevalence": "occasional",
+  "modes": [
+    "road",
+    "intermodal"
+  ],
+  "geography": [
+    "EU",
+    "North America"
+  ],
+  "summary": "Cargo is handed over voluntarily at the loading point to someone who is not entitled to it. No lock is forced and no vehicle is broken into, which is what makes this pattern both effective and difficult to classify: operationally it looks like a normal collection, and the loss is often first recorded as a delivery failure rather than a theft.",
+  "how_it_works": [
+    "The perpetrator obtains enough information about a genuine booking to present convincingly: reference numbers, consignee, commodity, collection window.",
+    "Information is acquired by impersonating a carrier or broker, by intercepting correspondence, or through an insider at any point in the chain.",
+    "A driver arrives inside or just before the booked window, presenting paperwork consistent with the genuine booking.",
+    "Loading staff release the cargo because the reference matches and there is time pressure at the dock.",
+    "The genuine carrier arrives later to find the load already collected, by which point the cargo is gone and the trail is cold."
+  ],
+  "indicators": [
+    {
+      "phase": "pre_award",
+      "signal": "Requests for load reference numbers, collection windows or consignee detail arrive from an unverified channel",
+      "observable_in": "Correspondence with the booking desk",
+      "weight": 3
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Driver arrives early, ahead of the booked window, and applies pressure to be loaded quickly",
+      "observable_in": "Gate log and dock staff observation",
+      "weight": 3,
+      "notes": "Common enough legitimately that it must be combined with an identity mismatch to carry weight."
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Driver identity document does not match the name on the dispatch confirmation",
+      "observable_in": "Driver ID check at gate",
+      "weight": 5
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Tractor or trailer plate does not match the dispatch record",
+      "observable_in": "Plate check at gate",
+      "weight": 5
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Paperwork is presented as a photograph or printout with inconsistent formatting, or the driver cannot produce the transport order through the carrier's own system",
+      "observable_in": "Document inspection at gate",
+      "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Two vehicles present for the same load reference",
+      "observable_in": "Gate log",
+      "weight": 5,
+      "notes": "Effectively conclusive, and the reason gate logs should be checked against open bookings in real time rather than reconciled later."
+    },
+    {
+      "phase": "post_event",
+      "signal": "The contracted carrier reports arriving to find the load already collected",
+      "observable_in": "Carrier exception report",
+      "weight": 5
+    }
+  ],
+  "false_positives": [
+    {
+      "looks_like": "An unexpected driver and vehicle arrive for a booked load.",
+      "actually": "A legitimate last-minute reallocation within the operator, or an approved subcontractor, that was not communicated to the dock.",
+      "how_to_rule_out": "Verify with the operator by calling the number held on the carrier master record, never the number offered by the driver, and confirm the substitution before releasing cargo."
+    },
+    {
+      "looks_like": "Driver presents printed or photographed paperwork.",
+      "actually": "Normal practice for many small operators, particularly on subcontracted or spot work.",
+      "how_to_rule_out": "Do not treat document format as the test. Test identity: does the vehicle belong to the contracted operator and does the operator confirm this driver for this load."
+    }
+  ],
+  "countermeasures": {
+    "preventive": [
+      "Issue a single-use collection code per booking, communicated to the carrier through the established channel and required at the gate.",
+      "Make release conditional on a three-way match of driver identity, vehicle registration and booking reference, with no discretion to override under time pressure.",
+      "Restrict distribution of load reference and consignee data to parties with a verified need, and treat unsolicited requests for it as a security event.",
+      "Give dock staff explicit authority to refuse loading on an identity mismatch, and remove any performance metric that penalises them for doing so."
+    ],
+    "detective": [
+      "Check the gate log against open bookings in real time so that a second presentation for the same reference is caught while the vehicle is still on site.",
+      "Photograph vehicle, plate and driver document at every collection and retain the images against the booking.",
+      "Alert when a collection is recorded outside the booked window."
+    ],
+    "responsive": [
+      "Treat the event as a theft from the moment of the mismatch, not from the expiry of the delivery window, since the first hours determine whether recovery is possible.",
+      "Preserve gate photographs, access-control records and CCTV immediately, before routine retention periods overwrite them.",
+      "Establish how the booking data leaked, since a fictitious pickup requires information that was obtained from somewhere and the leak will otherwise be used again.",
+      "Notify the genuine carrier, which is a witness and may be able to identify the impersonating party."
+    ]
+  },
+  "regulatory_hooks": [
+    {
+      "instrument": "LkSG",
+      "provision": "§5 Risikoanalyse",
+      "relevance": "A documented risk analysis of direct suppliers must identify this pattern class where the carrier population plausibly exposes the company to it."
+    },
+    {
+      "instrument": "LkSG",
+      "provision": "§6 Präventionsmaßnahmen",
+      "relevance": "Preventive measures listed here are the kind of control a company is expected to define and evidence once the risk is identified."
+    }
+  ],
+  "related": [
+    "FFT-002",
+    "FFT-003",
+    "FFT-009",
+    "FFT-010"
+  ],
+  "references": [
+    {
+      "title": "Annual Cargo Crime Statistics and Incident Information Service",
+      "publisher": "TAPA EMEA",
+      "url": "https://www.tapaemea.org/"
+    },
+    {
+      "title": "Organised property crime and cargo theft in the EU",
+      "publisher": "Europol",
+      "url": "https://www.europol.europa.eu/"
+    },
+    {
+      "title": "Road transport safety and security guidance",
+      "publisher": "IRU",
+      "url": "https://www.iru.org/"
+    }
+  ],
+  "version": "1.0.0",
+  "last_reviewed": "2026-09-05"
+}
