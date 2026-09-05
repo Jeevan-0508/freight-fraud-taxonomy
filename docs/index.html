@@ -19,6 +19,13 @@ a{color:var(--accent)}
 header{border-bottom:1px solid var(--line);padding:34px 22px 26px;background:linear-gradient(180deg,#101823,#0b0f14)}
 .wrap{max-width:1180px;margin:0 auto}
 h1{margin:0 0 8px;font-size:26px;letter-spacing:-.01em}
+.titlebar{display:flex;align-items:flex-start;gap:15px}
+.titlebar h1{flex:1;min-width:0}
+.brand{flex:none;line-height:0;margin-top:2px}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:contain;opacity:.92;
+  border:1px solid var(--line);background:#060a0f}
+.brand:hover img{opacity:1;border-color:var(--accent)}
+@media(max-width:520px){.brand img{width:36px;height:36px}}
 .sub{color:var(--dim);max-width:760px;margin:0}
 .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 14px}
@@ -83,7 +90,10 @@ footer{border-top:1px solid var(--line);margin-top:34px;padding:24px 22px 46px;c
 </head>
 <body>
 <header><div class="wrap">
+  <div class="titlebar">
   <h1>Freight &amp; Carrier Fraud Risk Taxonomy</h1>
+  <a class="brand" href="https://github.com/Jeevan-0508" target="_blank" rel="noopener" title="Jeevan Kumar — Risk. Governance. AI."><img src="jk-logo.png" alt="JK" width="44" height="44"></a>
+  </div>
   <p class="sub">An open, structured reference for fraud and cargo-loss patterns in European road freight.
   Every pattern lists the indicators that actually reveal it, where each one is observable, the false
   positives that make it easy to get wrong, and the countermeasures that address it.</p>
