@@ -13,8 +13,8 @@
       "insider",
       "regulatory"
     ],
-    "indicator_count": 85,
-    "countermeasure_count": 137
+    "indicator_count": 87,
+    "countermeasure_count": 138
   },
   "patterns": [
     {
@@ -89,6 +89,13 @@
           "signal": "Claim is submitted by, or on behalf of, an entity that does not appear anywhere in the contractual chain",
           "observable_in": "Claims file",
           "weight": 4
+        },
+        {
+          "phase": "in_transit",
+          "signal": "At a multi-leg or intermodal handoff, the booking reference in the system of record becomes decoupled from the physical asset that actually checks in, and the two are never reconciled",
+          "observable_in": "Booking/reference system reconciled against the physical asset ID confirmed at the rail, port or terminal check-in",
+          "weight": 4,
+          "notes": "This is where re-tendering or loss most often escapes detection: not at the original award, but at a leg where custody transfers between systems that do not talk to each other. A mismatch here can persist for weeks if never reconciled."
         }
       ],
       "false_positives": [
@@ -113,7 +120,8 @@
           "Require written disclosure and prior approval of any subcontracting, and make undisclosed re-tendering an express termination event in the transport contract.",
           "Verify operating authority and insurance against the issuing register directly, not against a document supplied by the counterparty.",
           "Cross-check that the entity's declared fleet capacity is consistent with the volume it is being awarded.",
-          "Confirm bank details out of band before the first payment, and treat any later change of bank details as a new verification event."
+          "Confirm bank details out of band before the first payment, and treat any later change of bank details as a new verification event.",
+          "Reconcile the booking reference against the physical asset that actually presents at every multi-leg or intermodal handoff, not only the identifier carried in the booking system."
         ],
         "detective": [
           "Make it mandatory to record tractor plate, trailer plate and driver identity at loading, and reconcile all three against the dispatch confirmation automatically rather than by eye.",
@@ -169,7 +177,7 @@
         }
       ],
       "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "last_reviewed": "2026-09-22"
     },
     {
       "id": "FFT-002",
@@ -976,6 +984,13 @@
           "signal": "Seals for a lane are drawn from a range that is not centrally controlled, or the sequence has gaps",
           "observable_in": "Seal issue and reconciliation log",
           "weight": 3
+        },
+        {
+          "phase": "post_event",
+          "signal": "Trailer or container shows evidence of forced physical entry, such as a broken locking mechanism, a pried door or a cut curtain, rather than a defeated or substituted seal",
+          "observable_in": "Physical inspection of the unit at delivery or at an intermediate custody check",
+          "weight": 5,
+          "notes": "Distinct from the stealthier reseal indicators above: a blunt forced-entry event is not trying to look like an intact, undisturbed load, so it points to a different actor profile and a different response (immediate physical recovery effort, not paperwork reconciliation)."
         }
       ],
       "false_positives": [
@@ -1044,7 +1059,7 @@
         }
       ],
       "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "last_reviewed": "2026-09-22"
     },
     {
       "id": "FFT-008",

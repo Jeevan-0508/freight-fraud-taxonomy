@@ -64,6 +64,13 @@
       "signal": "Seals for a lane are drawn from a range that is not centrally controlled, or the sequence has gaps",
       "observable_in": "Seal issue and reconciliation log",
       "weight": 3
+    },
+    {
+      "phase": "post_event",
+      "signal": "Trailer or container shows evidence of forced physical entry, such as a broken locking mechanism, a pried door or a cut curtain, rather than a defeated or substituted seal",
+      "observable_in": "Physical inspection of the unit at delivery or at an intermediate custody check",
+      "weight": 5,
+      "notes": "Distinct from the stealthier reseal indicators above: a blunt forced-entry event is not trying to look like an intact, undisturbed load, so it points to a different actor profile and a different response (immediate physical recovery effort, not paperwork reconciliation)."
     }
   ],
   "false_positives": [
@@ -132,5 +139,5 @@
     }
   ],
   "version": "1.0.0",
-  "last_reviewed": "2026-09-05"
+  "last_reviewed": "2026-09-22"
 }

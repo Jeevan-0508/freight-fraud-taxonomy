@@ -12,8 +12,8 @@
     "insider",
     "regulatory"
   ],
-  "indicator_count": 85,
-  "countermeasure_count": 137,
+  "indicator_count": 87,
+  "countermeasure_count": 138,
   "patterns": [
     {
       "id": "FFT-001",
