@@ -61,6 +61,13 @@
       "observable_in": "Claim narrative and telematics coverage",
       "weight": 3,
       "notes": "Not an indicator of the crime so much as of a control gap that makes this pattern viable and unattributable."
+    },
+    {
+      "phase": "in_transit",
+      "signal": "A brief unscheduled stop occurs at an unregistered location shortly before final delivery, too short for a rest break but long enough for partial unloading",
+      "observable_in": "Route/telematics stop analysis correlated against the scheduled journey and expected rest requirements",
+      "weight": 4,
+      "notes": "The 'last mile' variant of this pattern: cargo is diverted just before arrival rather than during a long overnight stop, so it is easy to miss if only long stops are reviewed."
     }
   ],
   "false_positives": [
@@ -137,5 +144,5 @@
     }
   ],
   "version": "1.0.0",
-  "last_reviewed": "2026-09-05"
+  "last_reviewed": "2026-09-22"
 }

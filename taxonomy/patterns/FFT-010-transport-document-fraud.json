@@ -64,6 +64,13 @@
       "observable_in": "Document handling record",
       "weight": 3,
       "notes": "Common in legitimate operations, so weak on its own; it matters because it removes the ability to test the other indicators."
+    },
+    {
+      "phase": "post_event",
+      "signal": "A police or incident report submitted in support of a loss claim does not match the claimed location or timeline when checked against independently obtained records",
+      "observable_in": "Cross-check of the submitted report's stated location and timeline against an independently obtained copy or confirmation from the reporting authority",
+      "weight": 4,
+      "notes": "Always re-verify through the authority directly rather than relying solely on the copy supplied by the party making the claim."
     }
   ],
   "false_positives": [
@@ -138,5 +145,5 @@
     }
   ],
   "version": "1.0.0",
-  "last_reviewed": "2026-09-05"
+  "last_reviewed": "2026-09-22"
 }

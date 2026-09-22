@@ -82,6 +82,26 @@
       "observable_in": "Register of directors and shareholders across entities",
       "weight": 4,
       "notes": "This is what makes the pattern repeatable, and why case records must be kept against people and addresses, not just trading names."
+    },
+    {
+      "phase": "in_transit",
+      "signal": "The same vehicle registration plate is presented for two different movements within a window too short for the vehicle to have plausibly completed the first",
+      "observable_in": "Gate check-in log cross-referenced by plate across concurrent or near-concurrent movements",
+      "weight": 5,
+      "notes": "A hard signal: physically the same plate cannot be in two places performing two deliveries at once."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "Volume accepted by a newly onboarded operator sits persistently just under a tier threshold that would trigger increased scrutiny, then rises sharply once the tier resets",
+      "observable_in": "Volume-over-time profile compared against the operator's tenure-based tier thresholds",
+      "weight": 3,
+      "notes": "Weak alone, but worth flagging when paired with any other pre-award indicator, since it suggests the threshold itself is known and being worked around."
+    },
+    {
+      "phase": "post_event",
+      "signal": "The same vehicle or trailer asset appears across several otherwise-unrelated carrier identities, more than one of which has already been suspended for cause",
+      "observable_in": "Asset registration records cross-referenced across carrier master data",
+      "weight": 4
     }
   ],
   "false_positives": [
@@ -151,5 +171,5 @@
     }
   ],
   "version": "1.0.0",
-  "last_reviewed": "2026-09-05"
+  "last_reviewed": "2026-09-22"
 }

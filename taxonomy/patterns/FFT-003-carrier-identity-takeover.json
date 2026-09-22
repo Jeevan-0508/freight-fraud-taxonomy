@@ -63,6 +63,13 @@
       "observable_in": "Direct verification using details from the register, not from the tender",
       "weight": 5,
       "notes": "Always re-contact using details obtained independently. Contacting the number supplied by the perpetrator simply reaches the perpetrator."
+    },
+    {
+      "phase": "in_transit",
+      "signal": "Two separate individuals independently present valid-looking credentials for the same movement within a short window, each passing identity verification on its own",
+      "observable_in": "Gate or check-in identity log for the movement, compared against the credential history for the assigned driver",
+      "weight": 5,
+      "notes": "Distinct from simple plate mismatch: both credentials individually check out, only the duplication across two people reveals the problem."
     }
   ],
   "false_positives": [
@@ -131,5 +138,5 @@
     }
   ],
   "version": "1.0.0",
-  "last_reviewed": "2026-09-05"
+  "last_reviewed": "2026-09-22"
 }

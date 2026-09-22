@@ -13,7 +13,7 @@
       "insider",
       "regulatory"
     ],
-    "indicator_count": 77,
+    "indicator_count": 85,
     "countermeasure_count": 137
   },
   "patterns": [
@@ -255,6 +255,26 @@
           "observable_in": "Register of directors and shareholders across entities",
           "weight": 4,
           "notes": "This is what makes the pattern repeatable, and why case records must be kept against people and addresses, not just trading names."
+        },
+        {
+          "phase": "in_transit",
+          "signal": "The same vehicle registration plate is presented for two different movements within a window too short for the vehicle to have plausibly completed the first",
+          "observable_in": "Gate check-in log cross-referenced by plate across concurrent or near-concurrent movements",
+          "weight": 5,
+          "notes": "A hard signal: physically the same plate cannot be in two places performing two deliveries at once."
+        },
+        {
+          "phase": "pre_award",
+          "signal": "Volume accepted by a newly onboarded operator sits persistently just under a tier threshold that would trigger increased scrutiny, then rises sharply once the tier resets",
+          "observable_in": "Volume-over-time profile compared against the operator's tenure-based tier thresholds",
+          "weight": 3,
+          "notes": "Weak alone, but worth flagging when paired with any other pre-award indicator, since it suggests the threshold itself is known and being worked around."
+        },
+        {
+          "phase": "post_event",
+          "signal": "The same vehicle or trailer asset appears across several otherwise-unrelated carrier identities, more than one of which has already been suspended for cause",
+          "observable_in": "Asset registration records cross-referenced across carrier master data",
+          "weight": 4
         }
       ],
       "false_positives": [
@@ -324,7 +344,7 @@
         }
       ],
       "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "last_reviewed": "2026-09-22"
     },
     {
       "id": "FFT-003",
@@ -391,6 +411,13 @@
           "observable_in": "Direct verification using details from the register, not from the tender",
           "weight": 5,
           "notes": "Always re-contact using details obtained independently. Contacting the number supplied by the perpetrator simply reaches the perpetrator."
+        },
+        {
+          "phase": "in_transit",
+          "signal": "Two separate individuals independently present valid-looking credentials for the same movement within a short window, each passing identity verification on its own",
+          "observable_in": "Gate or check-in identity log for the movement, compared against the credential history for the assigned driver",
+          "weight": 5,
+          "notes": "Distinct from simple plate mismatch: both credentials individually check out, only the duplication across two people reveals the problem."
         }
       ],
       "false_positives": [
@@ -459,7 +486,7 @@
         }
       ],
       "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "last_reviewed": "2026-09-22"
     },
     {
       "id": "FFT-004",
@@ -798,6 +825,13 @@
           "observable_in": "Claim narrative and telematics coverage",
           "weight": 3,
           "notes": "Not an indicator of the crime so much as of a control gap that makes this pattern viable and unattributable."
+        },
+        {
+          "phase": "in_transit",
+          "signal": "A brief unscheduled stop occurs at an unregistered location shortly before final delivery, too short for a rest break but long enough for partial unloading",
+          "observable_in": "Route/telematics stop analysis correlated against the scheduled journey and expected rest requirements",
+          "weight": 4,
+          "notes": "The 'last mile' variant of this pattern: cargo is diverted just before arrival rather than during a long overnight stop, so it is easy to miss if only long stops are reviewed."
         }
       ],
       "false_positives": [
@@ -874,7 +908,7 @@
         }
       ],
       "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "last_reviewed": "2026-09-22"
     },
     {
       "id": "FFT-007",
@@ -1076,6 +1110,13 @@
           "signal": "Telematics unit found disconnected, powered down, or physically shielded on inspection",
           "observable_in": "Vehicle inspection after the event",
           "weight": 5
+        },
+        {
+          "phase": "in_transit",
+          "signal": "A location-based arrival or departure stamp is recorded within seconds of check-in, with no corroborating confirmation from an independent yard or gate system",
+          "observable_in": "Cross-check between an app-based geolocation stamp and an independent yard-management or gate-log record for the same event",
+          "weight": 4,
+          "notes": "Distinct from the position-jump/signal-loss indicators above: here the device is working normally, but the stamp itself is being used as unearned proof of a physical event that an independent system does not corroborate."
         }
       ],
       "false_positives": [
@@ -1150,7 +1191,7 @@
         }
       ],
       "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "last_reviewed": "2026-09-22"
     },
     {
       "id": "FFT-009",
@@ -1218,6 +1259,13 @@
           "signal": "Undisclosed relationship between an employee with award or approval authority and a counterparty",
           "observable_in": "Conflict-of-interest declaration compared against register data",
           "weight": 4
+        },
+        {
+          "phase": "in_transit",
+          "signal": "A driver or check-in credential is used to authorise pickup from two locations that are inconsistent with realistic travel time between them",
+          "observable_in": "Credential/session usage log compared against the geolocation of the device used to authenticate",
+          "weight": 4,
+          "notes": "Usually indicates a shared, sold or stolen credential rather than the named individual acting alone."
         }
       ],
       "false_positives": [
@@ -1297,7 +1345,7 @@
         }
       ],
       "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "last_reviewed": "2026-09-22"
     },
     {
       "id": "FFT-010",
@@ -1365,6 +1413,13 @@
           "observable_in": "Document handling record",
           "weight": 3,
           "notes": "Common in legitimate operations, so weak on its own; it matters because it removes the ability to test the other indicators."
+        },
+        {
+          "phase": "post_event",
+          "signal": "A police or incident report submitted in support of a loss claim does not match the claimed location or timeline when checked against independently obtained records",
+          "observable_in": "Cross-check of the submitted report's stated location and timeline against an independently obtained copy or confirmation from the reporting authority",
+          "weight": 4,
+          "notes": "Always re-verify through the authority directly rather than relying solely on the copy supplied by the party making the claim."
         }
       ],
       "false_positives": [
@@ -1439,7 +1494,7 @@
         }
       ],
       "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "last_reviewed": "2026-09-22"
     },
     {
       "id": "FFT-011",

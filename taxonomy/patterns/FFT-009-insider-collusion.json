@@ -64,6 +64,13 @@
       "signal": "Undisclosed relationship between an employee with award or approval authority and a counterparty",
       "observable_in": "Conflict-of-interest declaration compared against register data",
       "weight": 4
+    },
+    {
+      "phase": "in_transit",
+      "signal": "A driver or check-in credential is used to authorise pickup from two locations that are inconsistent with realistic travel time between them",
+      "observable_in": "Credential/session usage log compared against the geolocation of the device used to authenticate",
+      "weight": 4,
+      "notes": "Usually indicates a shared, sold or stolen credential rather than the named individual acting alone."
     }
   ],
   "false_positives": [
@@ -143,5 +150,5 @@
     }
   ],
   "version": "1.0.0",
-  "last_reviewed": "2026-09-05"
+  "last_reviewed": "2026-09-22"
 }
