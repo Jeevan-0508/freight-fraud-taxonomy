@@ -104,6 +104,22 @@ pointing at patterns that do not exist, and filenames disagreeing with the ID in
 
 CI runs both on every push and pull request.
 
+## Candidate handoff contract
+
+`contracts/candidate-mo-v1.schema.json` defines an interchange format for candidate
+patterns exported by the synthetic Fraud Watch simulator. Its example fixture is
+illustrative test data, not a real freight incident or a claim that a new fraud
+pattern exists. Every export is labelled `synthetic_simulation` and
+`unverified_export`; correlation indices are explicitly not probabilities.
+
+The contract preserves the source repository revision when known, the taxonomy
+version and optional pinned source/snapshot hashes, candidate lifecycle, and the
+case provenance supplied with the export. A missing source revision or taxonomy
+hash remains `null` rather than being guessed. Promotion is outside this contract:
+it requires a separately reviewed change to this taxonomy. CI validates the
+example against the schema and checks that real-world, promotion, and unknown-field
+mutations are rejected.
+
 ## Scope and provenance
 
 Compiled from public industry, law-enforcement and regulatory sources — TAPA EMEA, Europol, IRU,
