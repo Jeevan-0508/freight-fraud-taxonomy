@@ -115,7 +115,9 @@ pattern exists. Every export is labelled `synthetic_simulation` and
 The contract preserves the source repository revision when known, the taxonomy
 version and optional pinned source/snapshot hashes, candidate lifecycle, and the
 case provenance supplied with the export. A missing source revision or taxonomy
-hash remains `null` rather than being guessed. Promotion is outside this contract:
+hash remains `null` rather than being guessed. A missing current classification
+reason also remains `null`; the candidate provenance does not retain a historical
+reason snapshot. Promotion is outside this contract:
 it requires a separately reviewed change to this taxonomy. CI validates the
 example against the schema and checks that real-world, promotion, and unknown-field
 mutations are rejected.

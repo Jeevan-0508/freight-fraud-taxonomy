@@ -273,6 +273,14 @@ def load_contract():
         trial.extend(contract_semantic_errors(valid))
         if trial:
             err("candidate contract", f"valid {lifecycle} lifecycle fixture rejected: {trial[0]}")
+    nullable_reason = copy.deepcopy(example)
+    nullable_reason["simulation"]["sim_time_seconds_from_genesis"] = 90000.5
+    nullable_reason["candidate"]["supporting_cases"][0]["classification_reason"] = None
+    trial = []
+    check(nullable_reason, schema, "candidate contract nullable/fractional fixture", trial)
+    trial.extend(contract_semantic_errors(nullable_reason))
+    if trial:
+        err("candidate contract", f"valid nullable-reason/fractional-clock fixture rejected: {trial[0]}")
     print("checked candidate-MO contract schema/example; rejected real-data, promotion, lifecycle, timestamp, taxonomy-reference, duplicate-provenance, duplicate-signal, and extra-field mutations")
     return schema, example
 
