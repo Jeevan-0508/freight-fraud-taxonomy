@@ -137,6 +137,28 @@
       "url": "https://www.tianet.org/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-22"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-22",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "IDENTITY_SWAP",
+    "label": "a real, dormant licence gets used by someone who is not its holder, and the equipment presenting at pickup is not registered to that holder either",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "ACCOUNT_TAKEOVER",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "EQUIPMENT_CARRIER_MISMATCH",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "DUPLICATE_ASSET_ID",
+        "test": "AT_NODE"
+      }
+    ],
+    "generation_order": 5
+  }
 }

@@ -10,7 +10,7 @@ Most published material on cargo crime stops at naming the threat. This taxonomy
 part that is actually hard in practice: knowing which signals genuinely reveal a pattern, where each
 signal can be observed, and — critically — which innocent explanations produce the same signal.
 
-`12` patterns · `77` indicators · `31` documented false positives · `137` countermeasures
+`12` patterns · `87` indicators · `31` documented false positives · `138` countermeasures
 
 ## Why the false positives matter
 
@@ -148,3 +148,8 @@ taxonomy has not accounted for is the most valuable thing you can add. See
 ## Licence
 
 [CC BY 4.0](LICENSE) for the taxonomy content. Use it, adapt it, cite it.
+## Simulator capability recipes
+
+Taxonomy 1.1.0 optionally carries a strict `simulation_recipe` on a pattern. Fraud Watch consumes these authored recipes using its existing allowlisted disruption and position primitives. Adding a compatible recipe enables that pattern without a second hardcoded pattern list. `generation_order` preserves seeded ordering; unknown primitives or versions fail closed. Patterns without a recipe remain visible as unsupported simulator coverage, rather than receiving invented behavior. FFT-011 currently has no executable recipe.
+
+These recipes describe synthetic laboratory scenarios. They do not establish real-world occurrence, incident frequency, source reliability, or fraud probability. The existing qualitative severity/prevalence descriptors and indicator weights are expert-authored inputs. Candidate exports remain synthetic hypotheses and cannot represent taxonomy promotion.

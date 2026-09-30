@@ -54,7 +54,7 @@
         "high",
         "critical"
       ],
-      "description": "Typical loss impact per realised event."
+      "description": "Expert-authored typical consequence category; not a measured loss distribution."
     },
     "prevalence": {
       "enum": [
@@ -63,7 +63,7 @@
         "common",
         "endemic"
       ],
-      "description": "How often the pattern is observed in EU road freight."
+      "description": "Expert-authored qualitative prevalence descriptor; not a measured incident frequency or calibrated probability."
     },
     "modes": {
       "type": "array",
@@ -129,7 +129,7 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 5,
-            "description": "1 = weak/contextual, 5 = near-conclusive on its own."
+            "description": "Authored indicator weight from 1 to 5 for coverage scoring; not a fraud probability or proof by itself."
           },
           "notes": {
             "type": "string"
@@ -252,6 +252,114 @@
     "last_reviewed": {
       "type": "string",
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "simulation_recipe": {
+      "description": "Authored synthetic Fraud Watch execution recipe. A simulator capability mapping, not evidence of real-world occurrence or prevalence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "engine",
+        "version",
+        "generation_order",
+        "plan_id",
+        "label",
+        "target_node_types",
+        "steps"
+      ],
+      "properties": {
+        "engine": {
+          "const": "fraud-watch"
+        },
+        "version": {
+          "const": 1
+        },
+        "generation_order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "plan_id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "target_node_types": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 6,
+              "uniqueItems": true,
+              "items": {
+                "enum": [
+                  "PORT",
+                  "FULFILLMENT_CENTER",
+                  "REGIONAL_HUB",
+                  "DEPOT",
+                  "WAREHOUSE",
+                  "CHECKPOINT"
+                ]
+              }
+            }
+          ]
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "type",
+              "test"
+            ],
+            "properties": {
+              "type": {
+                "enum": [
+                  "UNEXPECTED_STOP",
+                  "ROUTE_DEVIATION",
+                  "DRIVER_CHANGED",
+                  "TRAILER_SWAPPED",
+                  "MANIFEST_CHANGED",
+                  "SEAL_MISMATCH",
+                  "GPS_SIGNAL_LOST",
+                  "FALSE_MILESTONE_STAMP",
+                  "CARRIER_UNRESPONSIVE",
+                  "EQUIPMENT_CARRIER_MISMATCH",
+                  "DUPLICATE_ASSET_ID",
+                  "HANDOVER_GAP",
+                  "STAGED_BREAKDOWN",
+                  "ACCOUNT_TAKEOVER"
+                ]
+              },
+              "test": {
+                "enum": [
+                  "AT_NODE",
+                  "ON_LEG_INTO_NODE",
+                  "AT_NODE_TYPE"
+                ]
+              },
+              "nodeType": {
+                "enum": [
+                  "PORT",
+                  "FULFILLMENT_CENTER",
+                  "REGIONAL_HUB",
+                  "DEPOT",
+                  "WAREHOUSE",
+                  "CHECKPOINT"
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

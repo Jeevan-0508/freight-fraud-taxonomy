@@ -144,6 +144,25 @@
       "url": "https://www.tapaemea.org/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-22"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-22",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "PAPER_TRAIL",
+    "label": "the manifest changes once, quietly, and the milestone stamp behind it is claimed at a gate the truck did not clear the way the record says",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "MANIFEST_CHANGED",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "FALSE_MILESTONE_STAMP",
+        "test": "AT_NODE_TYPE",
+        "nodeType": "CHECKPOINT"
+      }
+    ],
+    "generation_order": 9
+  }
 }

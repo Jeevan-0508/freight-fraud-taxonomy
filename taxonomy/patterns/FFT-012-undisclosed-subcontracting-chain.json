@@ -161,6 +161,28 @@
       "url": "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XI-B-11&chapter=11"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-05"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-05",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "CHAIN_HANDOFF",
+    "label": "the vehicle and driver at pickup belong to an entity that appears nowhere in the shipper's own records, one tier below whoever was actually contracted",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "EQUIPMENT_CARRIER_MISMATCH",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "DRIVER_CHANGED",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "CARRIER_UNRESPONSIVE",
+        "test": "AT_NODE"
+      }
+    ],
+    "generation_order": 10
+  }
 }

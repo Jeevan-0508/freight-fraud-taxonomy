@@ -138,6 +138,32 @@
       "url": "https://www.iru.org/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-22"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-22",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "SEAL_AND_SWAP",
+    "label": "the seal on the box stops matching the paperwork at a yard, the box changes, and the delivery is stamped at the next gate",
+    "target_node_types": [
+      "WAREHOUSE",
+      "PORT"
+    ],
+    "steps": [
+      {
+        "type": "SEAL_MISMATCH",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "TRAILER_SWAPPED",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "FALSE_MILESTONE_STAMP",
+        "test": "AT_NODE_TYPE",
+        "nodeType": "CHECKPOINT"
+      }
+    ],
+    "generation_order": 1
+  }
 }

@@ -80,6 +80,8 @@ def check(node, spec, where, sink=None):
     elif t == "array":
         if len(node) < spec.get("minItems", 0):
             report(f"needs at least {spec['minItems']} item(s), has {len(node)}")
+        if "maxItems" in spec and len(node) > spec["maxItems"]:
+            report(f"has more than {spec['maxItems']} allowed items")
         if spec.get("uniqueItems") and len(node) != len({json.dumps(item, sort_keys=True) for item in node}):
             report("items must be unique")
         for i, v in enumerate(node):
@@ -130,12 +132,44 @@ for f in files:
         if not f.name.startswith(pid + "-"):
             err(f.name, f"filename does not start with its id {pid}")
 
+recipe_ids = set()
+recipe_orders = set()
 for pid, data in loaded.items():
     for rel in data.get("related", []):
         if rel not in loaded:
             err(pid, f"related references unknown pattern {rel}")
         if rel == pid:
             err(pid, "related references itself")
+    recipe = data.get("simulation_recipe")
+    if isinstance(recipe, dict):
+        for key, seen in (("plan_id", recipe_ids), ("generation_order", recipe_orders)):
+            value = recipe.get(key)
+            if not isinstance(value, (str, int)):
+                continue
+            if value in seen:
+                err(pid, f"duplicate simulation recipe {key}: {value}")
+            seen.add(value)
+        for step in recipe.get("steps", []):
+            if not isinstance(step, dict):
+                continue
+            if (step.get("test") == "AT_NODE_TYPE") != ("nodeType" in step):
+                err(pid, "simulation recipe nodeType must be present only for AT_NODE_TYPE")
+
+recipe_schema = SCHEMA["properties"]["simulation_recipe"]
+recipe_fixture = next((p["simulation_recipe"] for p in loaded.values() if "simulation_recipe" in p), None)
+if recipe_fixture:
+    for label, mutate in (
+        ("executable field", lambda x: x.update(script="execute me")),
+        ("unsupported primitive", lambda x: x["steps"][0].update(type="EXECUTE")),
+        ("unsupported version", lambda x: x.update(version=99)),
+        ("oversized steps", lambda x: x.update(steps=x["steps"] * 30)),
+    ):
+        trial = []
+        invalid = copy.deepcopy(recipe_fixture)
+        mutate(invalid)
+        check(invalid, recipe_schema, label, trial)
+        if not trial:
+            err("simulation recipe", f"negative mutation accepted: {label}")
 
 
 def contract_semantic_errors(document):

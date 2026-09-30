@@ -142,6 +142,28 @@
       "url": "https://www.iru.org/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-22"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-22",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "SPOOFED_APPROACH",
+    "label": "position reporting is broken on the run in, and the asset shows up somewhere it also still is",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "GPS_SIGNAL_LOST",
+        "test": "ON_LEG_INTO_NODE"
+      },
+      {
+        "type": "ROUTE_DEVIATION",
+        "test": "ON_LEG_INTO_NODE"
+      },
+      {
+        "type": "DUPLICATE_ASSET_ID",
+        "test": "AT_NODE"
+      }
+    ],
+    "generation_order": 0
+  }
 }

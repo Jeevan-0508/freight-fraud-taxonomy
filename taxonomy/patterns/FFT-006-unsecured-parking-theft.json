@@ -143,6 +143,24 @@
       "url": "https://www.iru.org/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-22"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-22",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "CURTAIN_STOP",
+    "label": "an unscheduled stop lands somewhere that is not a certified secure yard, and the truck is down there long enough for the curtain to be a problem",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "UNEXPECTED_STOP",
+        "test": "ON_LEG_INTO_NODE"
+      },
+      {
+        "type": "STAGED_BREAKDOWN",
+        "test": "AT_NODE"
+      }
+    ],
+    "generation_order": 7
+  }
 }

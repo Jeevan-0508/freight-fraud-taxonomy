@@ -1,7 +1,7 @@
 {
   "meta": {
     "taxonomy": "Freight & Carrier Fraud Risk Taxonomy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "pattern_count": 12,
     "categories": [
       "cargo_loss",
@@ -176,8 +176,30 @@
           "url": "https://www.tapaemea.org/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-22"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-22",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "DOUBLE_TENDER",
+        "label": "the booking on record is quietly re-tendered to a second carrier, and the manifest stops matching the asset that actually shows up",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "MANIFEST_CHANGED",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "GPS_SIGNAL_LOST",
+            "test": "ON_LEG_INTO_NODE"
+          },
+          {
+            "type": "HANDOVER_GAP",
+            "test": "AT_NODE"
+          }
+        ],
+        "generation_order": 3
+      }
     },
     {
       "id": "FFT-002",
@@ -351,8 +373,30 @@
           "url": "https://www.tianet.org/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-22"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-22",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "GHOST_ONBOARD",
+        "label": "the vehicle at pickup carries no livery and is not the plate on file, then it goes quiet on the leg out and never answers again",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "EQUIPMENT_CARRIER_MISMATCH",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "GPS_SIGNAL_LOST",
+            "test": "ON_LEG_INTO_NODE"
+          },
+          {
+            "type": "CARRIER_UNRESPONSIVE",
+            "test": "AT_NODE"
+          }
+        ],
+        "generation_order": 4
+      }
     },
     {
       "id": "FFT-003",
@@ -493,8 +537,30 @@
           "url": "https://www.tianet.org/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-22"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-22",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "IDENTITY_SWAP",
+        "label": "a real, dormant licence gets used by someone who is not its holder, and the equipment presenting at pickup is not registered to that holder either",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "ACCOUNT_TAKEOVER",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "EQUIPMENT_CARRIER_MISMATCH",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "DUPLICATE_ASSET_ID",
+            "test": "AT_NODE"
+          }
+        ],
+        "generation_order": 5
+      }
     },
     {
       "id": "FFT-004",
@@ -635,8 +701,30 @@
           "url": "https://www.iru.org/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-05",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "UNRECORDED_HANDOVER",
+        "label": "a stop short of the destination, a handover nobody confirms, and then the operator stops answering",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "UNEXPECTED_STOP",
+            "test": "ON_LEG_INTO_NODE"
+          },
+          {
+            "type": "HANDOVER_GAP",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "CARRIER_UNRESPONSIVE",
+            "test": "AT_NODE"
+          }
+        ],
+        "generation_order": 2
+      }
     },
     {
       "id": "FFT-005",
@@ -767,8 +855,26 @@
           "url": "https://www.europol.europa.eu/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-05",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "PERSISTENT_SHORTAGE",
+        "label": "the seal recorded at destination does not match the one recorded at origin, and the stop along the way runs longer than the corridor norm",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "SEAL_MISMATCH",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "UNEXPECTED_STOP",
+            "test": "ON_LEG_INTO_NODE"
+          }
+        ],
+        "generation_order": 6
+      }
     },
     {
       "id": "FFT-006",
@@ -915,8 +1021,26 @@
           "url": "https://www.iru.org/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-22"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-22",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "CURTAIN_STOP",
+        "label": "an unscheduled stop lands somewhere that is not a certified secure yard, and the truck is down there long enough for the curtain to be a problem",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "UNEXPECTED_STOP",
+            "test": "ON_LEG_INTO_NODE"
+          },
+          {
+            "type": "STAGED_BREAKDOWN",
+            "test": "AT_NODE"
+          }
+        ],
+        "generation_order": 7
+      }
     },
     {
       "id": "FFT-007",
@@ -1058,8 +1182,34 @@
           "url": "https://www.iru.org/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-22"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-22",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "SEAL_AND_SWAP",
+        "label": "the seal on the box stops matching the paperwork at a yard, the box changes, and the delivery is stamped at the next gate",
+        "target_node_types": [
+          "WAREHOUSE",
+          "PORT"
+        ],
+        "steps": [
+          {
+            "type": "SEAL_MISMATCH",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "TRAILER_SWAPPED",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "FALSE_MILESTONE_STAMP",
+            "test": "AT_NODE_TYPE",
+            "nodeType": "CHECKPOINT"
+          }
+        ],
+        "generation_order": 1
+      }
     },
     {
       "id": "FFT-008",
@@ -1205,8 +1355,30 @@
           "url": "https://www.iru.org/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-22"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-22",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "SPOOFED_APPROACH",
+        "label": "position reporting is broken on the run in, and the asset shows up somewhere it also still is",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "GPS_SIGNAL_LOST",
+            "test": "ON_LEG_INTO_NODE"
+          },
+          {
+            "type": "ROUTE_DEVIATION",
+            "test": "ON_LEG_INTO_NODE"
+          },
+          {
+            "type": "DUPLICATE_ASSET_ID",
+            "test": "AT_NODE"
+          }
+        ],
+        "generation_order": 0
+      }
     },
     {
       "id": "FFT-009",
@@ -1359,8 +1531,31 @@
           "url": "https://www.europol.europa.eu/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-22"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-22",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "GATE_TIPOFF",
+        "label": "a driver credential authorises a pickup outside the pattern normal for that shift, and the gate stamp that should have caught it does not",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "DRIVER_CHANGED",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "HANDOVER_GAP",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "FALSE_MILESTONE_STAMP",
+            "test": "AT_NODE_TYPE",
+            "nodeType": "CHECKPOINT"
+          }
+        ],
+        "generation_order": 8
+      }
     },
     {
       "id": "FFT-010",
@@ -1508,8 +1703,27 @@
           "url": "https://www.tapaemea.org/"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-22"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-22",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "PAPER_TRAIL",
+        "label": "the manifest changes once, quietly, and the milestone stamp behind it is claimed at a gate the truck did not clear the way the record says",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "MANIFEST_CHANGED",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "FALSE_MILESTONE_STAMP",
+            "test": "AT_NODE_TYPE",
+            "nodeType": "CHECKPOINT"
+          }
+        ],
+        "generation_order": 9
+      }
     },
     {
       "id": "FFT-011",
@@ -1815,8 +2029,30 @@
           "url": "https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&mtdsg_no=XI-B-11&chapter=11"
         }
       ],
-      "version": "1.0.0",
-      "last_reviewed": "2026-09-05"
+      "version": "1.1.0",
+      "last_reviewed": "2026-09-05",
+      "simulation_recipe": {
+        "engine": "fraud-watch",
+        "version": 1,
+        "plan_id": "CHAIN_HANDOFF",
+        "label": "the vehicle and driver at pickup belong to an entity that appears nowhere in the shipper's own records, one tier below whoever was actually contracted",
+        "target_node_types": null,
+        "steps": [
+          {
+            "type": "EQUIPMENT_CARRIER_MISMATCH",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "DRIVER_CHANGED",
+            "test": "AT_NODE"
+          },
+          {
+            "type": "CARRIER_UNRESPONSIVE",
+            "test": "AT_NODE"
+          }
+        ],
+        "generation_order": 10
+      }
     }
   ]
 }
