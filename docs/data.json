@@ -1,7 +1,7 @@
 {
   "meta": {
     "taxonomy": "Freight & Carrier Fraud Risk Taxonomy",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "pattern_count": 12,
     "categories": [
       "cargo_loss",
