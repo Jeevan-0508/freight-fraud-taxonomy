@@ -149,6 +149,29 @@
       "url": "https://www.europol.europa.eu/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-22"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-22",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "GATE_TIPOFF",
+    "label": "a driver credential authorises a pickup outside the pattern normal for that shift, and the gate stamp that should have caught it does not",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "DRIVER_CHANGED",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "HANDOVER_GAP",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "FALSE_MILESTONE_STAMP",
+        "test": "AT_NODE_TYPE",
+        "nodeType": "CHECKPOINT"
+      }
+    ],
+    "generation_order": 8
+  }
 }

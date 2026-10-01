@@ -170,6 +170,28 @@
       "url": "https://www.tianet.org/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-22"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-22",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "GHOST_ONBOARD",
+    "label": "the vehicle at pickup carries no livery and is not the plate on file, then it goes quiet on the leg out and never answers again",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "EQUIPMENT_CARRIER_MISMATCH",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "GPS_SIGNAL_LOST",
+        "test": "ON_LEG_INTO_NODE"
+      },
+      {
+        "type": "CARRIER_UNRESPONSIVE",
+        "test": "AT_NODE"
+      }
+    ],
+    "generation_order": 4
+  }
 }

@@ -157,6 +157,28 @@
       "url": "https://www.tapaemea.org/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-22"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-22",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "DOUBLE_TENDER",
+    "label": "the booking on record is quietly re-tendered to a second carrier, and the manifest stops matching the asset that actually shows up",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "MANIFEST_CHANGED",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "GPS_SIGNAL_LOST",
+        "test": "ON_LEG_INTO_NODE"
+      },
+      {
+        "type": "HANDOVER_GAP",
+        "test": "AT_NODE"
+      }
+    ],
+    "generation_order": 3
+  }
 }

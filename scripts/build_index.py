@@ -13,7 +13,7 @@ patterns.sort(key=lambda p: p["id"])
 
 index = {
     "taxonomy": "Freight & Carrier Fraud Risk Taxonomy",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "pattern_count": len(patterns),
     "categories": sorted({p["category"] for p in patterns}),
     "indicator_count": sum(len(p["indicators"]) for p in patterns),

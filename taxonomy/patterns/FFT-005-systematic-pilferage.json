@@ -127,6 +127,24 @@
       "url": "https://www.europol.europa.eu/"
     }
   ],
-  "version": "1.0.0",
-  "last_reviewed": "2026-09-05"
+  "version": "1.1.0",
+  "last_reviewed": "2026-09-05",
+  "simulation_recipe": {
+    "engine": "fraud-watch",
+    "version": 1,
+    "plan_id": "PERSISTENT_SHORTAGE",
+    "label": "the seal recorded at destination does not match the one recorded at origin, and the stop along the way runs longer than the corridor norm",
+    "target_node_types": null,
+    "steps": [
+      {
+        "type": "SEAL_MISMATCH",
+        "test": "AT_NODE"
+      },
+      {
+        "type": "UNEXPECTED_STOP",
+        "test": "ON_LEG_INTO_NODE"
+      }
+    ],
+    "generation_order": 6
+  }
 }

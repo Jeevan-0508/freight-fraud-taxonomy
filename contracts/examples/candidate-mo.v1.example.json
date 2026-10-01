@@ -1,0 +1,62 @@
+{
+  "schema_version": "candidate-mo.v1",
+  "kind": "candidate_mo",
+  "data_class": "synthetic_simulation",
+  "exported_at": "2026-09-29T14:00:00.000Z",
+  "simulation": {
+    "seed": 12345,
+    "sim_time_seconds_from_genesis": 90000
+  },
+  "source": {
+    "repository": "Jeevan-0508/fraud-watch",
+    "repository_url": "https://github.com/Jeevan-0508/fraud-watch",
+    "revision": null,
+    "authenticity": "unverified_export"
+  },
+  "taxonomy": {
+    "repository": "Jeevan-0508/freight-fraud-taxonomy",
+    "version": "1.0.0",
+    "source_commit": null,
+    "snapshot_sha256": null
+  },
+  "candidate": {
+    "id": "fraud-watch:SEAL_MISMATCH+SEAL_REPLACED",
+    "signature": "SEAL_MISMATCH+SEAL_REPLACED",
+    "lifecycle_state": "DISCOVERED",
+    "source_state": "CANDIDATE",
+    "time_basis": "simulation_seconds_from_genesis",
+    "first_seen_at": 72000,
+    "candidate_since": 81000,
+    "review_started_at": null,
+    "resolved_at": null,
+    "resolution_note": null,
+    "supporting_cases": [
+      {
+        "case_id": "MO-0012",
+        "classification": "POTENTIAL_NEW_MO",
+        "current_classification": "POTENTIAL_NEW_MO",
+        "classification_reason": "Example contract fixture only.",
+        "recorded_at": 81000,
+        "case_opened_at": 72000,
+        "first_observed_at": 71400,
+        "signal_types": ["SEAL_MISMATCH", "SEAL_REPLACED"],
+        "related_pattern_id": "FFT-007",
+        "correlation_index": 38,
+        "correlation_index_semantics": "synthetic_signal_index_not_probability"
+      },
+      {
+        "case_id": "MO-0013",
+        "classification": "EMERGING_BEHAVIOR",
+        "current_classification": "EMERGING_BEHAVIOR",
+        "classification_reason": "Example contract fixture only.",
+        "recorded_at": 82800,
+        "case_opened_at": 82800,
+        "first_observed_at": 82200,
+        "signal_types": ["SEAL_MISMATCH", "SEAL_REPLACED"],
+        "related_pattern_id": "FFT-007",
+        "correlation_index": 42,
+        "correlation_index_semantics": "synthetic_signal_index_not_probability"
+      }
+    ]
+  }
+}

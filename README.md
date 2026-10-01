@@ -10,7 +10,7 @@ Most published material on cargo crime stops at naming the threat. This taxonomy
 part that is actually hard in practice: knowing which signals genuinely reveal a pattern, where each
 signal can be observed, and — critically — which innocent explanations produce the same signal.
 
-`12` patterns · `77` indicators · `31` documented false positives · `137` countermeasures
+`12` patterns · `93` indicators · `31` documented false positives · `143` countermeasures
 
 ## Why the false positives matter
 
@@ -104,15 +104,38 @@ pointing at patterns that do not exist, and filenames disagreeing with the ID in
 
 CI runs both on every push and pull request.
 
+## Candidate handoff contract
+
+`contracts/candidate-mo-v1.schema.json` defines an interchange format for candidate
+patterns exported by the synthetic Fraud Watch simulator. Its example fixture is
+illustrative test data, not a real freight incident or a claim that a new fraud
+pattern exists. Every export is labelled `synthetic_simulation` and
+`unverified_export`; correlation indices are explicitly not probabilities.
+
+The contract preserves the source repository revision when known, the taxonomy
+version and optional pinned source/snapshot hashes, candidate lifecycle, and the
+case provenance supplied with the export. A missing source revision or taxonomy
+hash remains `null` rather than being guessed. A missing current classification
+reason also remains `null`; the candidate provenance does not retain a historical
+reason snapshot. Promotion is outside this contract:
+it requires a separately reviewed change to this taxonomy. CI validates the
+example against the schema and checks that real-world, promotion, and unknown-field
+mutations are rejected.
+
 ## Scope and provenance
 
 Compiled from public industry, law-enforcement and regulatory sources — TAPA EMEA, Europol, IRU,
-ESPORG, EUSPA, UNECE, BAFA and the EU legal instruments cited in each entry.
+ESPORG, EUSPA, UNECE, BAFA and the EU legal instruments cited in each entry. A separate offline
+review of user-supplied internal incident deep dives informed the wording of several indicators,
+false positives and controls in version 1.2.0. The source documents were used only for aggregate
+pattern review and are not included here.
 
-**This repository contains no confidential, proprietary or employer-specific material.** No internal
-detection thresholds, case data, identifiers or process documentation from any organisation are
-included. Where a countermeasure refers to a threshold, it refers to the concept of having one, never
-to a real value.
+**This repository contains no confidential, proprietary or employer-specific material.** No source
+documents, internal detection thresholds, case data, identifiers or process documentation from any
+organisation are included. Where a countermeasure refers to a threshold, it refers to the concept of
+having one, never to a real value. The offline review is not a measured incident-rate study and does
+not establish that any pattern occurred in the real world; it only informed candidate wording for
+human review.
 
 Severity and prevalence are qualitative judgements about European road freight, offered as a starting
 baseline. They are not derived from a proprietary dataset and should be recalibrated against your own
@@ -130,3 +153,8 @@ taxonomy has not accounted for is the most valuable thing you can add. See
 ## Licence
 
 [CC BY 4.0](LICENSE) for the taxonomy content. Use it, adapt it, cite it.
+## Simulator capability recipes
+
+Taxonomy 1.1.0 optionally carries a strict `simulation_recipe` on a pattern. Fraud Watch consumes these authored recipes using its existing allowlisted disruption and position primitives. Adding a compatible recipe enables that pattern without a second hardcoded pattern list. `generation_order` preserves seeded ordering; unknown primitives or versions fail closed. Patterns without a recipe remain visible as unsupported simulator coverage, rather than receiving invented behavior. FFT-011 currently has no executable recipe.
+
+These recipes describe synthetic laboratory scenarios. They do not establish real-world occurrence, incident frequency, source reliability, or fraud probability. The existing qualitative severity/prevalence descriptors and indicator weights are expert-authored inputs. Candidate exports remain synthetic hypotheses and cannot represent taxonomy promotion.
