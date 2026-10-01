@@ -10,7 +10,7 @@ Most published material on cargo crime stops at naming the threat. This taxonomy
 part that is actually hard in practice: knowing which signals genuinely reveal a pattern, where each
 signal can be observed, and — critically — which innocent explanations produce the same signal.
 
-`12` patterns · `87` indicators · `31` documented false positives · `138` countermeasures
+`12` patterns · `93` indicators · `31` documented false positives · `143` countermeasures
 
 ## Why the false positives matter
 
@@ -125,12 +125,17 @@ mutations are rejected.
 ## Scope and provenance
 
 Compiled from public industry, law-enforcement and regulatory sources — TAPA EMEA, Europol, IRU,
-ESPORG, EUSPA, UNECE, BAFA and the EU legal instruments cited in each entry.
+ESPORG, EUSPA, UNECE, BAFA and the EU legal instruments cited in each entry. A separate offline
+review of user-supplied internal incident deep dives informed the wording of several indicators,
+false positives and controls in version 1.2.0. The source documents were used only for aggregate
+pattern review and are not included here.
 
-**This repository contains no confidential, proprietary or employer-specific material.** No internal
-detection thresholds, case data, identifiers or process documentation from any organisation are
-included. Where a countermeasure refers to a threshold, it refers to the concept of having one, never
-to a real value.
+**This repository contains no confidential, proprietary or employer-specific material.** No source
+documents, internal detection thresholds, case data, identifiers or process documentation from any
+organisation are included. Where a countermeasure refers to a threshold, it refers to the concept of
+having one, never to a real value. The offline review is not a measured incident-rate study and does
+not establish that any pattern occurred in the real world; it only informed candidate wording for
+human review.
 
 Severity and prevalence are qualitative judgements about European road freight, offered as a starting
 baseline. They are not derived from a proprietary dataset and should be recalibrated against your own

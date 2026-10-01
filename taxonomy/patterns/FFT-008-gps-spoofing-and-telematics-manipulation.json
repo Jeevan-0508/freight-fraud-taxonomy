@@ -65,6 +65,13 @@
     },
     {
       "phase": "in_transit",
+      "signal": "A tracker goes silent immediately after a short dwell near a terminal or handover point while an independent source records subsequent movement",
+      "observable_in": "Telematics gap joined to gate, toll, yard, fuel or access-control records",
+      "weight": 5,
+      "notes": "The timing narrows the investigative window but does not by itself distinguish deliberate removal from a device fault."
+    },
+    {
+      "phase": "in_transit",
       "signal": "A location-based arrival or departure stamp is recorded within seconds of check-in, with no corroborating confirmation from an independent yard or gate system",
       "observable_in": "Cross-check between an app-based geolocation stamp and an independent yard-management or gate-log record for the same event",
       "weight": 4,
@@ -86,6 +93,11 @@
       "looks_like": "Sustained regional GNSS interference.",
       "actually": "Documented wide-area interference affecting all users in a region, which is well reported in parts of Europe and is not aimed at any particular vehicle.",
       "how_to_rule_out": "Compare against published interference monitoring for the region and period before drawing any conclusion about a specific movement."
+    },
+    {
+      "looks_like": "A tracker goes silent at a terminal or after a short stop.",
+      "actually": "Battery failure, planned maintenance, coverage loss, wiring fault or a device replaced during a legitimate repair.",
+      "how_to_rule_out": "Compare with fleet-wide outages, inspect the device and wiring, and reconcile the movement with independent records before attributing intent."
     }
   ],
   "countermeasures": {
@@ -99,6 +111,7 @@
       "Run automated speed and distance plausibility checks between consecutive fixes and alert on physically impossible transitions.",
       "Alert on any position gap above a defined duration, and treat gaps during rest periods as higher priority than gaps in motion.",
       "Aggregate signal-loss events by driver, vehicle, corridor and hardware version to separate deliberate from technical causes.",
+      "Join every high-priority gap to independent gate, yard, toll, fuel or access records and preserve the raw timestamps before smoothing.",
       "Compare individual gaps against fleet-wide loss in the same area and window before escalating."
     ],
     "responsive": [
@@ -142,8 +155,8 @@
       "url": "https://www.iru.org/"
     }
   ],
-  "version": "1.1.0",
-  "last_reviewed": "2026-09-22",
+  "version": "1.2.0",
+  "last_reviewed": "2026-10-01",
   "simulation_recipe": {
     "engine": "fraud-watch",
     "version": 1,

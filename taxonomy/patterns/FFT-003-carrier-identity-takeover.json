@@ -41,6 +41,20 @@
     },
     {
       "phase": "pre_award",
+      "signal": "A primary administrator or account owner changes, and the change propagates to the execution platform without an independent notification or immutable audit event",
+      "observable_in": "Carrier account change log compared with the downstream load-board and execution-platform audit logs",
+      "weight": 5,
+      "notes": "A valid downstream credential does not prove that the person who changed it was the legitimate operator. Missing change visibility is a control gap, not proof of takeover."
+    },
+    {
+      "phase": "pre_award",
+      "signal": "A newly active administrator, driver identity or contact channel is linked through a shared account, device or sign-in identifier to unrelated suspended counterparties",
+      "observable_in": "Related-account and identity-link analysis across carrier master, authentication and driver records",
+      "weight": 4,
+      "notes": "A link is a lead for review, not a finding of common control or wrongdoing."
+    },
+    {
+      "phase": "pre_award",
       "signal": "Bank details supplied do not match the account name of the licensed operator, or are held in a different country from the operator",
       "observable_in": "Payment master data",
       "weight": 5
@@ -82,6 +96,11 @@
       "looks_like": "Bank account name differs from the operator name.",
       "actually": "Legitimate use of a factoring company or a group treasury account, which is common in road freight.",
       "how_to_rule_out": "Require a written assignment or factoring agreement, and verify it with the factor directly. Legitimate factoring is documented and verifiable."
+    },
+    {
+      "looks_like": "A primary administrator or account owner changes shortly before a movement.",
+      "actually": "A genuine ownership transfer, staff change, leave cover or managed-service transition.",
+      "how_to_rule_out": "Verify the change through the previously known operator channel, record the effective date and preserve the old-to-new administrator audit trail."
     }
   ],
   "countermeasures": {
@@ -94,7 +113,8 @@
     "detective": [
       "Run automated lookalike-domain detection against the domains of onboarded carriers.",
       "Flag tenders where a dormant licence suddenly becomes commercially active.",
-      "Reconcile equipment registration against licence holder at the gate."
+      "Reconcile equipment registration against licence holder at the gate.",
+      "Alert on primary-administrator changes and reconcile them to an immutable downstream audit event before allowing a new movement."
     ],
     "responsive": [
       "Notify the impersonated operator, which is a victim and will usually cooperate, and which may already hold evidence.",
@@ -137,8 +157,8 @@
       "url": "https://www.tianet.org/"
     }
   ],
-  "version": "1.1.0",
-  "last_reviewed": "2026-09-22",
+  "version": "1.2.0",
+  "last_reviewed": "2026-10-01",
   "simulation_recipe": {
     "engine": "fraud-watch",
     "version": 1,

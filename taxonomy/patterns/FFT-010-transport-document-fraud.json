@@ -71,6 +71,13 @@
       "observable_in": "Cross-check of the submitted report's stated location and timeline against an independently obtained copy or confirmation from the reporting authority",
       "weight": 4,
       "notes": "Always re-verify through the authority directly rather than relying solely on the copy supplied by the party making the claim."
+    },
+    {
+      "phase": "post_event",
+      "signal": "A delivery or milestone stamp is present but the corresponding gate, yard-management, CMR or consignee record does not corroborate the physical handover",
+      "observable_in": "Milestone and delivery record reconciled against independent gate, yard, CMR and consignee confirmation",
+      "weight": 4,
+      "notes": "A stamp is an assertion about an event, not the event itself. Missing corroboration is a review trigger, not proof of falsification."
     }
   ],
   "false_positives": [
@@ -88,6 +95,11 @@
       "looks_like": "The same reference appearing twice.",
       "actually": "A split delivery, a re-delivery after a failed attempt, or a documented partial movement.",
       "how_to_rule_out": "Check whether the duplication is explained by a recorded split or re-delivery event before treating it as reuse."
+    },
+    {
+      "looks_like": "A milestone or delivery stamp has no matching independent gate record.",
+      "actually": "An asynchronous feed, a documented manual exception, a site-system outage or a legitimate handover outside the normal system path.",
+      "how_to_rule_out": "Check the outage and exception logs, obtain the original CMR or consignee confirmation and record the reconciliation result before calling the stamp false."
     }
   ],
   "countermeasures": {
@@ -100,6 +112,7 @@
     "detective": [
       "Deduplicate delivery documents automatically by image hash and reference across movements and claims.",
       "Reconcile document timestamps against telematics arrival and departure data and flag inconsistencies.",
+      "Reconcile milestone stamps against an independent gate or yard event before treating them as proof of collection or delivery.",
       "Sample-verify delivery signatures directly with consignees rather than only when a claim arises.",
       "Flag claims that rely on a document for which no original can be produced."
     ],
@@ -144,8 +157,8 @@
       "url": "https://www.tapaemea.org/"
     }
   ],
-  "version": "1.1.0",
-  "last_reviewed": "2026-09-22",
+  "version": "1.2.0",
+  "last_reviewed": "2026-10-01",
   "simulation_recipe": {
     "engine": "fraud-watch",
     "version": 1,

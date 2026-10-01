@@ -65,6 +65,13 @@
       "notes": "Effectively conclusive, and the reason gate logs should be checked against open bookings in real time rather than reconciled later."
     },
     {
+      "phase": "in_transit",
+      "signal": "Two different drivers each pass identity verification for the same movement within a short window, even though the first collection has already been recorded",
+      "observable_in": "Gate identity events and collection timestamps reconciled against the booking and dispatch record",
+      "weight": 5,
+      "notes": "Each check can pass on its own. The contradiction is temporal and only appears when the two valid-looking presentations are compared."
+    },
+    {
       "phase": "post_event",
       "signal": "The contracted carrier reports arriving to find the load already collected",
       "observable_in": "Carrier exception report",
@@ -81,6 +88,11 @@
       "looks_like": "Driver presents printed or photographed paperwork.",
       "actually": "Normal practice for many small operators, particularly on subcontracted or spot work.",
       "how_to_rule_out": "Do not treat document format as the test. Test identity: does the vehicle belong to the contracted operator and does the operator confirm this driver for this load."
+    },
+    {
+      "looks_like": "A second driver or vehicle appears for the same movement after the first presentation.",
+      "actually": "A documented relay, recovery, shift change or approved substitution whose dispatch update did not reach the gate in time.",
+      "how_to_rule_out": "Confirm the handover through the pre-existing carrier contact and retain the original and replacement identity records with the reason and time of the change."
     }
   ],
   "countermeasures": {
@@ -92,6 +104,7 @@
     ],
     "detective": [
       "Check the gate log against open bookings in real time so that a second presentation for the same reference is caught while the vehicle is still on site.",
+      "Alert when two valid-looking driver or vehicle identities present for one movement inside a short time window, and hold release until the carrier confirms the substitution.",
       "Photograph vehicle, plate and driver document at every collection and retain the images against the booking.",
       "Alert when a collection is recorded outside the booked window."
     ],
@@ -137,8 +150,8 @@
       "url": "https://www.iru.org/"
     }
   ],
-  "version": "1.1.0",
-  "last_reviewed": "2026-09-05",
+  "version": "1.2.0",
+  "last_reviewed": "2026-10-01",
   "simulation_recipe": {
     "engine": "fraud-watch",
     "version": 1,

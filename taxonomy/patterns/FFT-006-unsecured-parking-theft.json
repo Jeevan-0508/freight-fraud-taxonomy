@@ -68,6 +68,13 @@
       "observable_in": "Route/telematics stop analysis correlated against the scheduled journey and expected rest requirements",
       "weight": 4,
       "notes": "The 'last mile' variant of this pattern: cargo is diverted just before arrival rather than during a long overnight stop, so it is easy to miss if only long stops are reviewed."
+    },
+    {
+      "phase": "in_transit",
+      "signal": "A loaded trailer is uncoupled and left at a non-secure location during an improvised driver swap or destination delay",
+      "observable_in": "Trailer coupling status, dispatch exception, parking location and driver-change record",
+      "weight": 4,
+      "notes": "The delay or driver swap may be legitimate; the exposure is the unattended loaded trailer and must be checked against the agreed parking policy."
     }
   ],
   "false_positives": [
@@ -80,6 +87,11 @@
       "looks_like": "Curtain damage at delivery.",
       "actually": "Accidental damage from loading equipment or road debris, which is common on soft-sided equipment.",
       "how_to_rule_out": "Compare the cut geometry and location with the load plan, and verify against seal and count records whether anything is actually missing."
+    },
+    {
+      "looks_like": "A loaded trailer is left at an unsecured location during a driver change or delay.",
+      "actually": "A site closure, legally required rest, breakdown or documented relay where no loss occurred.",
+      "how_to_rule_out": "Verify the instruction, coupling status, CCTV or receipt and the trailer condition at the next controlled handover before treating the stop as theft evidence."
     }
   ],
   "countermeasures": {
@@ -91,6 +103,7 @@
     ],
     "detective": [
       "Geofence certified secure parking areas and alert on any rest period taken outside them.",
+      "Require an approved exception and positive custody handover before a loaded trailer is uncoupled outside a secure yard.",
       "Alert on stop duration above a corridor-specific threshold in segments with elevated incident history.",
       "Fit and monitor door and curtain sensors so that the loss is detected at the stop rather than at the delivery."
     ],
@@ -143,8 +156,8 @@
       "url": "https://www.iru.org/"
     }
   ],
-  "version": "1.1.0",
-  "last_reviewed": "2026-09-22",
+  "version": "1.2.0",
+  "last_reviewed": "2026-10-01",
   "simulation_recipe": {
     "engine": "fraud-watch",
     "version": 1,
