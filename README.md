@@ -1,160 +1,57 @@
-<p align="center"><img src="assets/jk-brand-banner.png" alt="Jeevan Siddhabhaktula — Risk. Governance. AI." width="280"></p>
+<p align="center">
+  <img src="assets/hero.svg" alt="Freight and Carrier Fraud Taxonomy — a practical map of signals and false positives" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://jeevan-0508.github.io/freight-fraud-taxonomy/">Browse the taxonomy</a> ·
+  <a href="#what-each-pattern-contains">Pattern structure</a> ·
+  <a href="#use-it-with-the-tools">Use it with the tools</a>
+</p>
 
 # Freight & Carrier Fraud Risk Taxonomy
 
-An open, structured taxonomy of fraud and cargo-loss patterns in European road freight.
+### A practical map of what signals mean—and what they do not.
 
-**[Browse it here →](https://jeevan-0508.github.io/freight-fraud-taxonomy/)**
+This open taxonomy describes fraud and cargo-loss patterns in European road freight, with the observable signals, likely false positives, detection stage, and countermeasures needed to investigate them responsibly.
 
-Most published material on cargo crime stops at naming the threat. This taxonomy is built around the
-part that is actually hard in practice: knowing which signals genuinely reveal a pattern, where each
-signal can be observed, and — critically — which innocent explanations produce the same signal.
+`12 PATTERNS` · `93 INDICATORS` · `31 FALSE POSITIVES` · `143 COUNTERMEASURES`
 
-`12` patterns · `93` indicators · `31` documented false positives · `143` countermeasures
+## Start with the taxonomy
+
+**[Browse the live taxonomy →](https://jeevan-0508.github.io/freight-fraud-taxonomy/)**
+
+Choose a pattern, inspect the signals that make it plausible, then read the benign explanations that could look identical. The false-positive block is not an appendix; it is part of the finding.
+
+## What each pattern contains
+
+<table>
+  <tr>
+    <td width="50%"><strong>Pattern</strong><br>What the behaviour looks like in an operational freight context.</td>
+    <td width="50%"><strong>Signals</strong><br>What can actually be observed, and at which stage of the movement.</td>
+  </tr>
+  <tr>
+    <td width="50%"><strong>False positives</strong><br>Innocent explanations that should be ruled out before escalation.</td>
+    <td width="50%"><strong>Countermeasures</strong><br>Practical checks and interventions matched to the stage of risk.</td>
+  </tr>
+</table>
 
 ## Why the false positives matter
 
-Every pattern entry carries a `false_positives` block. This is deliberate and it is the part most
-comparable references omit.
+A regional GNSS interference event can look like a tracker being jammed. A last-minute dispatch change can look like double brokering. A carrier assigned repeatedly to one lane can look suspicious for reasons that have nothing to do with fraud.
 
-In freight risk work, the expensive mistakes are rarely missed detections — they are confident wrong
-calls. A driver disproportionately assigned to one lane will show a disproportionate shortage rate.
-A regional GNSS interference event looks identical to a tracker being jammed. A last-minute dispatch
-reallocation looks identical to double brokering at the gate. Acting on any of those without ruling
-out the benign explanation damages a supplier relationship, or a person's career, for nothing.
+The taxonomy is built to slow down the confident wrong call and make the next useful observation easier to choose.
 
-So each pattern states what it looks like, what it usually turns out to be, and the specific check
-that separates the two.
+## Use it with the tools
 
-## Structure
+[Freight Risk Atlas](https://github.com/Jeevan-0508/freight-risk-atlas) turns the taxonomy into an assessment workflow. [Fraud Watch](https://github.com/Jeevan-0508/fraud-watch) places signals inside a synthetic living world. [RISK//MESH](https://github.com/Jeevan-0508/Risk-Mesh) connects the evidence and outcome story.
 
-```
-taxonomy/
-  schema.json          JSON Schema (draft-07) every pattern must satisfy
-  index.json           generated manifest — fetch this first
-  patterns/*.json      one file per pattern
-scripts/
-  validate.py          schema + cross-reference validation, no dependencies
-  build_index.py       regenerates index.json and docs/data.json
-docs/                  the GitHub Pages browser
-```
+<details>
+<summary><strong>Scope and provenance</strong></summary>
 
-Each pattern contains:
+This is an open structured reference for portfolio and research use. It is not legal advice, a carrier score, or a substitute for an organisation’s investigation policy and local expertise.
 
-| Field | What it holds |
-|---|---|
-| `how_it_works` | The mechanics, in order |
-| `indicators` | Signal, the **phase** it appears in (`pre_award`, `in_transit`, `post_event`), where it is **observable**, and a weight from 1 (contextual) to 5 (near-conclusive) |
-| `false_positives` | Looks like / usually actually / how to rule out |
-| `countermeasures` | Split into `preventive`, `detective`, `responsive` |
-| `regulatory_hooks` | The provision the pattern engages — LkSG, CSDDD, CMR, Mobility Package |
-| `references` | Public sources |
+</details>
 
-Indicators are tagged by phase because the phase determines whether you can prevent the loss or only
-explain it afterwards. A pattern whose only weight-5 indicators sit in `post_event` is, by
-construction, one you cannot currently stop — and that is useful to know explicitly.
+The repository currently does not bundle an application screenshot; the browsable taxonomy above is the source of truth for the experience.
 
-## Patterns
-
-| ID | Pattern | Category | Severity | Prevalence | Indicators |
-|---|---|---|---|---|---|
-| `FFT-001` | [Double Brokering](taxonomy/patterns/FFT-001-double-brokering.json) | contractual | high | common | 7 |
-| `FFT-002` | [Phantom Carrier](taxonomy/patterns/FFT-002-phantom-carrier.json) | identity | critical | common | 9 |
-| `FFT-003` | [Carrier Identity Takeover](taxonomy/patterns/FFT-003-carrier-identity-takeover.json) | identity | critical | occasional | 6 |
-| `FFT-004` | [Fictitious Pickup](taxonomy/patterns/FFT-004-fictitious-pickup.json) | cargo loss | critical | occasional | 7 |
-| `FFT-005` | [Systematic Pilferage](taxonomy/patterns/FFT-005-systematic-pilferage.json) | cargo loss | medium | endemic | 6 |
-| `FFT-006` | [Unsecured Parking Theft](taxonomy/patterns/FFT-006-unsecured-parking-theft.json) | cargo loss | high | endemic | 6 |
-| `FFT-007` | [Seal Tampering and Reseal Fraud](taxonomy/patterns/FFT-007-seal-tampering-and-reseal-fraud.json) | documentary | medium | common | 6 |
-| `FFT-008` | [GPS Spoofing and Telematics Manipulation](taxonomy/patterns/FFT-008-gps-spoofing-and-telematics-manipulation.json) | digital | high | occasional | 6 |
-| `FFT-009` | [Insider Collusion](taxonomy/patterns/FFT-009-insider-collusion.json) | insider | critical | occasional | 6 |
-| `FFT-010` | [Transport Document Fraud](taxonomy/patterns/FFT-010-transport-document-fraud.json) | documentary | medium | common | 6 |
-| `FFT-011` | [Insurance Certificate Fraud](taxonomy/patterns/FFT-011-insurance-certificate-fraud.json) | financial | high | common | 6 |
-| `FFT-012` | [Undisclosed Subcontracting Chain](taxonomy/patterns/FFT-012-undisclosed-subcontracting-chain.json) | regulatory | high | common | 6 |
-
-Categories: cargo loss (3), contractual (1), digital (1), documentary (2), financial (1), identity (2), insider (1), regulatory (1)
-
-## Using the data
-
-`taxonomy/index.json` is the manifest; `docs/data.json` is every pattern in one bundle.
-
-```python
-import json, urllib.request
-B = "https://raw.githubusercontent.com/Jeevan-0508/freight-fraud-taxonomy/main/"
-data = json.load(urllib.request.urlopen(B + "docs/data.json"))
-
-# indicators you could act on before the cargo moves
-for p in data["patterns"]:
-    early = [i for i in p["indicators"] if i["phase"] == "pre_award" and i["weight"] >= 4]
-    if early:
-        print(p["id"], p["name"])
-        for i in early:
-            print("   ", i["weight"], i["signal"], "->", i["observable_in"])
-```
-
-## Validating a change
-
-```bash
-python3 scripts/validate.py      # schema, enums, weights, duplicate ids, dangling `related`
-python3 scripts/build_index.py   # regenerate index.json and docs/data.json
-```
-
-`validate.py` has no third-party dependencies. It implements the subset of JSON Schema this taxonomy
-uses, plus the cross-file checks a generic validator cannot do: duplicate IDs, `related` entries
-pointing at patterns that do not exist, and filenames disagreeing with the ID inside them.
-
-CI runs both on every push and pull request.
-
-## Candidate handoff contract
-
-`contracts/candidate-mo-v1.schema.json` defines an interchange format for candidate
-patterns exported by the synthetic Fraud Watch simulator. Its example fixture is
-illustrative test data, not a real freight incident or a claim that a new fraud
-pattern exists. Every export is labelled `synthetic_simulation` and
-`unverified_export`; correlation indices are explicitly not probabilities.
-
-The contract preserves the source repository revision when known, the taxonomy
-version and optional pinned source/snapshot hashes, candidate lifecycle, and the
-case provenance supplied with the export. A missing source revision or taxonomy
-hash remains `null` rather than being guessed. A missing current classification
-reason also remains `null`; the candidate provenance does not retain a historical
-reason snapshot. Promotion is outside this contract:
-it requires a separately reviewed change to this taxonomy. CI validates the
-example against the schema and checks that real-world, promotion, and unknown-field
-mutations are rejected.
-
-## Scope and provenance
-
-Compiled from public industry, law-enforcement and regulatory sources — TAPA EMEA, Europol, IRU,
-ESPORG, EUSPA, UNECE, BAFA and the EU legal instruments cited in each entry. A separate offline
-review of user-supplied internal incident deep dives informed the wording of several indicators,
-false positives and controls in version 1.2.0. The source documents were used only for aggregate
-pattern review and are not included here.
-
-**This repository contains no confidential, proprietary or employer-specific material.** No source
-documents, internal detection thresholds, case data, identifiers or process documentation from any
-organisation are included. Where a countermeasure refers to a threshold, it refers to the concept of
-having one, never to a real value. The offline review is not a measured incident-rate study and does
-not establish that any pattern occurred in the real world; it only informed candidate wording for
-human review.
-
-Severity and prevalence are qualitative judgements about European road freight, offered as a starting
-baseline. They are not derived from a proprietary dataset and should be recalibrated against your own
-loss history before being used to make decisions.
-
-Not legal advice. The regulatory hooks indicate where a pattern engages an obligation; they are not a
-compliance opinion.
-
-## Contributing
-
-Corrections are especially welcome on the `false_positives` blocks — a benign explanation this
-taxonomy has not accounted for is the most valuable thing you can add. See
-[CONTRIBUTING.md](CONTRIBUTING.md).
-
-## Licence
-
-[CC BY 4.0](LICENSE) for the taxonomy content. Use it, adapt it, cite it.
-## Simulator capability recipes
-
-Taxonomy 1.2.0 optionally carries a strict `simulation_recipe` on a pattern. Fraud Watch consumes these authored recipes using its existing allowlisted disruption and position primitives. Adding a compatible recipe enables that pattern without a second hardcoded pattern list. `generation_order` preserves seeded ordering; unknown primitives or versions fail closed. Patterns without a recipe remain visible as unsupported simulator coverage, rather than receiving invented behavior. FFT-011 currently has no executable recipe.
-
-These recipes describe synthetic laboratory scenarios. They do not establish real-world occurrence, incident frequency, source reliability, or fraud probability. The existing qualitative severity/prevalence descriptors and indicator weights are expert-authored inputs. Candidate exports remain synthetic hypotheses and cannot represent taxonomy promotion.
+<p align="center"><sub>Built by <a href="https://github.com/Jeevan-0508">Jeevan Siddhabhaktula</a> · MIT licensed</sub></p>
