@@ -4,6 +4,8 @@
 
 <p align="center">
   <a href="https://jeevan-0508.github.io/freight-fraud-taxonomy/">Browse the taxonomy</a> ·
+  <a href="docs/getting-started.md">Getting started</a> ·
+  <a href="docs/quality-review.md">Quality review</a> ·
   <a href="#what-each-pattern-contains">Pattern structure</a> ·
   <a href="#use-it-with-the-tools">Use it with the tools</a>
 </p>
@@ -54,4 +56,4 @@ This is an open structured reference for portfolio and research use. It is not l
 
 The repository currently does not bundle an application screenshot; the browsable taxonomy above is the source of truth for the experience.
 
-<p align="center"><sub>Built by <a href="https://github.com/Jeevan-0508">Jeevan Siddhabhaktula</a> · MIT licensed</sub></p>
+<p align="center"><sub>Built by <a href="https://github.com/Jeevan-0508">Jeevan Siddhabhaktula</a> · <a href="LICENSE">CC BY 4.0 licensed</a></sub></p>
